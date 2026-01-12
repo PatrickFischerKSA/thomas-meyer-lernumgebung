@@ -1,0 +1,53 @@
+function show(id, text) {
+  document.getElementById(id).textContent = text;
+}
+
+/* 7. Oktober */
+function feedbackOkt1(el) {
+  if (el.value.length > 20) {
+    show("fb-okt-1",
+      "Weiterdenken: Warum gerade diese Szene? Was sagt deine Wahl über deine Perspektive?"
+    );
+  }
+}
+
+function feedbackOkt2(el) {
+  if (el.value.length > 20) {
+    show("fb-okt-2",
+      "Reflexion: Gefühle sind Teil politischer Wahrnehmung. Welche könnten dein Urteil beeinflussen?"
+    );
+  }
+}
+
+function feedbackOkt3(el) {
+  if (el.value.length > 20) {
+    show("fb-okt-3",
+      "Vertiefung: Welche dieser Fragen würdest du einem Autor oder Journalisten stellen?"
+    );
+  }
+}
+
+/* Schweiz */
+function feedbackCH1(el) {
+  if (el.value.length > 20) {
+    show("fb-ch-1",
+      "Analyse: Handelt es sich um offene Gewalt, subtile Sprache oder strukturelle Muster?"
+    );
+  }
+}
+
+function feedbackCH2(el) {
+  if (el.value.length > 20) {
+    show("fb-ch-2",
+      "Weiterdenken: Warum überrascht dich das – hattest du andere Erwartungen an die Schweiz?"
+    );
+  }
+}
+
+function feedbackCH3(el) {
+  if (el.value.length > 20) {
+    show("fb-ch-3",
+      "Verknüpfung: Inwiefern bestätigt oder vertieft der Film Meyers literarische Perspektive?"
+    );
+  }
+}
