@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Zugriff geschützt – Thomas Meyer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="login">
+
+<div class="login-box">
+  <h1>Zugriff geschützt</h1>
+
+  <p>
+    Diese Lernumgebung enthält urheberrechtlich geschütztes Material
+    und ist ausschließlich für den schulischen Unterricht bestimmt.
+  </p>
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Passwort eingeben"
+  >
+
+  <button onclick="checkPassword()">Zugang öffnen</button>
+
+  <p id="error" class="error"></p>
+</div>
+
+<script src="js/auth.js"></script>
+</body>
+</html>
