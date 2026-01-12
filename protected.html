@@ -5,12 +5,33 @@
   <title>Thomas Meyer – Sprache, Antisemitismus, Gegenwart</title>
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Zugriffsschutz -->
+  <!-- Zugriffsschutz (wie vereinbart; bleibt) -->
   <script>
     if (sessionStorage.getItem("access_granted") !== "true") {
       window.location.href = "index.html";
     }
   </script>
+
+  <!-- NEU: Print-Optimierung direkt in dieser Datei (zusätzlich zu style.css, keine Ersetzung) -->
+  <style>
+    /* NEU: kleine Layout-Stütze, falls style.css minimal gehalten ist */
+    .panel-sub { margin-top: 1.5rem; padding-top: 1rem; border-top: 2px solid #ddd; }
+    .thesis { margin-top: 1.25rem; }
+    .thesis textarea, .question-block textarea { width: 100%; min-height: 110px; margin-top: 0.5rem; }
+    .feedback { margin-top: 0.5rem; font-style: italic; color: #444; }
+    .hint { display: inline-block; margin-top: 0.25rem; font-size: 0.95rem; color: #555; }
+    .resource-link { margin-top: 0.75rem; display: inline-block; }
+
+    /* NEU: Druck – nur Abschnitt 6 sichtbar (Fragen) */
+    @media print {
+      header, footer, .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body::before { display: none !important; } /* falls Hintergrundbild via style.css */
+      .panel { box-shadow: none !important; margin: 0 !important; max-width: none !important; }
+      textarea { border: 1px solid #999 !important; }
+    }
+    .print-only { display: none; }
+  </style>
 </head>
 
 <body>
@@ -23,189 +44,554 @@
 <main>
 
 <!-- ===================================================== -->
-<!-- 1. EINSTIEG -->
+<!-- 1. EINSTIEG: SPRACHE IST NIE HARMLOS -->
 <!-- ===================================================== -->
-<section class="panel">
+<section class="panel" id="sec1">
   <h2>1. Einstieg: Sprache ist nie harmlos</h2>
 
   <p>
-    Thomas Meyer beschreibt in seinem Text „Die jüdische Nase“,
-    wie scheinbar beiläufige Bemerkungen antisemitische Klischees
-    reproduzieren. Der Satz
-    <em>„Ich dachte, Juden erkennt man an der Nase“</em>
-    steht exemplarisch für einen Antisemitismus, der nicht
-    aggressiv auftritt, sondern als „harmlos“ wahrgenommen wird.
+    Thomas Meyer berichtet davon, wie ihm gesagt wurde:
+    <em>„Ich dachte, Juden erkennt man an der Nase.“</em>
   </p>
 
   <p>
-    Gerade diese Alltäglichkeit macht ihn gesellschaftlich
-    wirksam und schwer angreifbar.
+    Solche Aussagen sind keine Ausnahmen. Sie zeigen, wie tief antisemitische Klischees
+    im Alltag verankert sind – oft ohne böse Absicht, aber mit klarer Wirkung.
+    Gerade diese Alltäglichkeit macht Antisemitismus gesellschaftlich wirksam und
+    zugleich schwer angreifbar.
   </p>
 
-  <a href="assets/pdf/Meyer_Nase.pdf" target="_blank" rel="noopener noreferrer">
+  <a class="resource-link" href="assets/pdf/Meyer_Nase.pdf" target="_blank" rel="noopener noreferrer">
     📄 Text lesen: Thomas Meyer – „Die jüdische Nase“ (PDF)
   </a>
 
-  <!-- ===================== -->
-  <!-- THESENBLOCK (12/12) -->
-  <!-- ===================== -->
-
+  <!-- NEU: Ressource unter dem PDF: „Thesen & Reflexion“ (12/12) -->
   <div class="panel-sub">
     <h3>Thomas Meyer: „Die jüdische Nase“ – Thesen & Reflexion</h3>
 
-    <script>
-      function thesisFeedback(el, id, text) {
-        if (el.value.trim().length >= 40) {
-          document.getElementById(id).textContent = text;
-        } else {
-          document.getElementById(id).textContent = "";
-        }
-      }
-    </script>
+    <p class="no-print">
+      <strong>Arbeitsweise:</strong> Lies die These, schreibe deine Gedanken ins Feld (mind. ca. 40 Zeichen).
+      Direkt darunter erscheint ein <strong>Sofort-Feedback</strong>, das dich zum Weiterdenken anleitet.
+    </p>
 
+    <!-- THESE 1 -->
     <div class="thesis">
-      <p><strong>These 1:</strong> Antisemitismus wird gesellschaftlich fast ausschließlich mit körperlicher Gewalt gleichgesetzt.</p>
-      <textarea oninput="thesisFeedback(this,'fb1','Diese enge Definition blendet sprachliche und gedankliche Formen aus. Dadurch bleibt Alltagsantisemitismus gesellschaftlich akzeptiert.')"></textarea>
-      <div class="feedback" id="fb1"></div>
+      <p><strong>These 1</strong><br>Antisemitismus wird gesellschaftlich fast ausschließlich mit körperlicher Gewalt gleichgesetzt.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Erläutere, warum diese enge Definition problematisch ist. Welche Folgen hat sie für den Umgang mit Antisemitismus im Alltag?</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_1','Diese Verengung blendet antisemitische Denk- und Sprachmuster aus, die ohne Gewalt auskommen. Menschen können sich dadurch selbst als „nicht antisemitisch“ wahrnehmen, obwohl sie Vorurteile reproduzieren. Antisemitismus bleibt so gesellschaftlich akzeptiert und wird nicht hinterfragt.')"></textarea>
+      <div class="feedback" id="tm_fb_1"></div>
     </div>
 
+    <!-- THESE 2 -->
     <div class="thesis">
-      <p><strong>These 2:</strong> Der gewaltlose Antisemitismus ist die häufigste, aber am schwersten erkennbare Form.</p>
-      <textarea oninput="thesisFeedback(this,'fb2','Gerade weil diese Form ohne offene Aggression auskommt, wird sie selten als Antisemitismus erkannt oder benannt.')"></textarea>
-      <div class="feedback" id="fb2"></div>
+      <p><strong>These 2</strong><br>Der gewaltlose Antisemitismus ist die häufigste, aber am schwersten erkennbare Form.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Beschreibe zwei typische Merkmale des gewaltlosen Antisemitismus nach Meyer.</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_2','Gewaltloser Antisemitismus äußert sich häufig freundlich, humorvoll oder scheinbar interessiert. Er arbeitet mit Verallgemeinerungen und Klischees und wird nicht als Hass, sondern als „normale Meinung“ oder „Witz“ wahrgenommen. Genau das macht ihn schwer angreifbar.')"></textarea>
+      <div class="feedback" id="tm_fb_2"></div>
     </div>
 
+    <!-- THESE 3 -->
     <div class="thesis">
-      <p><strong>These 3:</strong> Gewaltloser Antisemitismus stammt aus der gesellschaftlichen Mitte.</p>
-      <textarea oninput="thesisFeedback(this,'fb3','Menschen aus der gesellschaftlichen Mitte sehen sich selbst als tolerant und reflektiert – das erschwert Selbstkritik.')"></textarea>
-      <div class="feedback" id="fb3"></div>
+      <p><strong>These 3</strong><br>Gewaltloser Antisemitismus stammt aus der gesellschaftlichen Mitte.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Warum ist es für Meyer besonders problematisch, dass Antisemitismus aus der Mitte der Gesellschaft kommt?</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_3','Weil sich diese Menschen selbst als tolerant, gebildet und moralisch korrekt verstehen. Dadurch halten sie ihre Aussagen für harmlos und sind kaum bereit zur Selbstkritik. Antisemitismus wird so stabilisiert, nicht bekämpft.')"></textarea>
+      <div class="feedback" id="tm_fb_3"></div>
     </div>
 
+    <!-- THESE 4 -->
     <div class="thesis">
-      <p><strong>These 4:</strong> Jüdische Identität wird oft als Erklärung für individuelles Verhalten benutzt.</p>
-      <textarea oninput="thesisFeedback(this,'fb4','Individuelles Verhalten wird kollektiv gedeutet. Das entzieht jüdischen Menschen ihre Individualität.')"></textarea>
-      <div class="feedback" id="fb4"></div>
+      <p><strong>These 4</strong><br>Jüdische Identität wird oft als Erklärung für individuelles Verhalten benutzt.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Erkläre, was daran diskriminierend ist, wenn Verhalten mit „jüdisch sein“ erklärt wird.</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_4','Individuelle Eigenschaften werden nicht als persönlich, sondern als gruppentypisch gedeutet. Das entzieht jüdischen Menschen ihre Individualität und macht sie zu Repräsentanten eines Kollektivs.')"></textarea>
+      <div class="feedback" id="tm_fb_4"></div>
     </div>
 
+    <!-- THESE 5 -->
     <div class="thesis">
-      <p><strong>These 5:</strong> Auch positive Zuschreibungen gegenüber Juden sind antisemitisch.</p>
-      <textarea oninput="thesisFeedback(this,'fb5','Positive Stereotype bleiben Stereotype: Sie reduzieren Menschen auf Erwartungen.')"></textarea>
-      <div class="feedback" id="fb5"></div>
+      <p><strong>These 5</strong><br>Auch positive Zuschreibungen gegenüber Juden sind antisemitisch.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Warum können scheinbar positive Aussagen (z. B. „Juden sind intelligent“) problematisch sein?</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_5','Sie reduzieren Menschen auf stereotype Eigenschaften. Wer diesen nicht entspricht, gilt als Ausnahme. So bleibt das Vorurteil bestehen und das Individuum wird unsichtbar gemacht.')"></textarea>
+      <div class="feedback" id="tm_fb_5"></div>
     </div>
 
+    <!-- THESE 6 -->
     <div class="thesis">
-      <p><strong>These 6:</strong> Antisemitische Klischees haben historische Ursprünge, die bis heute wirken.</p>
-      <textarea oninput="thesisFeedback(this,'fb6','Historische Bilder werden kulturell weitergegeben und unkritisch reproduziert.')"></textarea>
-      <div class="feedback" id="fb6"></div>
+      <p><strong>These 6</strong><br>Antisemitische Klischees haben historische Ursprünge, die bis heute wirken.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Nenne einen historischen Ursprung antisemitischer Klischees, den Meyer erklärt.</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_6','Ein Beispiel ist das Bild des „geldgierigen Juden“, das im Mittelalter entstand, als Christen durch kirchliche Verbote keine Zinsen nehmen durften und Juden in den Geldverleih gedrängt wurden. Dieses historische Muster wirkt bis heute fort.')"></textarea>
+      <div class="feedback" id="tm_fb_6"></div>
     </div>
 
+    <!-- THESE 7 -->
     <div class="thesis">
-      <p><strong>These 7:</strong> Israel wird häufig mit „den Juden“ gleichgesetzt.</p>
-      <textarea oninput="thesisFeedback(this,'fb7','Diese Gleichsetzung macht jüdische Menschen kollektiv verantwortlich für Staatspolitik.')"></textarea>
-      <div class="feedback" id="fb7"></div>
+      <p><strong>These 7</strong><br>Israel wird häufig mit „den Juden“ gleichgesetzt.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Erkläre, warum es antisemitisch sein kann, Israelkritik an jüdische Einzelpersonen zu richten.</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_7','Weil jüdische Menschen dadurch kollektiv für die Politik eines Staates verantwortlich gemacht werden, mit dem sie individuell nichts zu tun haben müssen. Das hebt die Trennung zwischen Staat und Religionszugehörigkeit auf.')"></textarea>
+      <div class="feedback" id="tm_fb_7"></div>
     </div>
 
+    <!-- THESE 8 -->
     <div class="thesis">
-      <p><strong>These 8:</strong> Antisemitische Aussagen werden oft als Humor oder Meinung verteidigt.</p>
-      <textarea oninput="thesisFeedback(this,'fb8','Meyer betont: Entscheidend ist die Wirkung – nicht die behauptete Absicht.')"></textarea>
-      <div class="feedback" id="fb8"></div>
+      <p><strong>These 8</strong><br>Antisemitische Aussagen werden oft als Humor oder Meinung verteidigt.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Welche Rolle spielt laut Meyer die Wirkung einer Aussage im Vergleich zur Absicht?</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_8','Die Wirkung auf Betroffene ist entscheidend. Ob etwas „so gemeint“ war, ist zweitrangig, wenn es verletzend wirkt. Humor rechtfertigt keine Diskriminierung.')"></textarea>
+      <div class="feedback" id="tm_fb_8"></div>
     </div>
 
+    <!-- THESE 9 -->
     <div class="thesis">
-      <p><strong>These 9:</strong> Erfahrungen jüdischer Menschen werden häufig relativiert.</p>
-      <textarea oninput="thesisFeedback(this,'fb9','Betroffenen wird Überempfindlichkeit unterstellt – ihre Erfahrung wird entwertet.')"></textarea>
-      <div class="feedback" id="fb9"></div>
+      <p><strong>These 9</strong><br>Erfahrungen jüdischer Menschen mit Antisemitismus werden häufig relativiert.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Welche typischen Reaktionen beschreibt Meyer auf Berichte über Antisemitismus?</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_9','Juden wird Überempfindlichkeit, Paranoia oder Humorlosigkeit unterstellt. Damit wird ihre Erfahrung entwertet und ihnen die Kompetenz abgesprochen, Antisemitismus zu erkennen.')"></textarea>
+      <div class="feedback" id="tm_fb_9"></div>
     </div>
 
+    <!-- THESE 10 -->
     <div class="thesis">
-      <p><strong>These 10:</strong> Antisemitismus beginnt bei Sprache und Denken, nicht bei Gewalt.</p>
-      <textarea oninput="thesisFeedback(this,'fb10','Sprache schafft Denkmuster, die Ausgrenzung normalisieren.')"></textarea>
-      <div class="feedback" id="fb10"></div>
+      <p><strong>These 10</strong><br>Antisemitismus beginnt bei Sprache und Denken, nicht bei Gewalt.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Erkläre den Zusammenhang zwischen Sprache, Denken und späterer Ausgrenzung.</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_10','Sprachliche Zuschreibungen und Denkmuster normalisieren Vorurteile. Sie schaffen ein Klima, in dem Ausgrenzung legitim erscheint. Gewalt ist die Eskalation, nicht der Anfang.')"></textarea>
+      <div class="feedback" id="tm_fb_10"></div>
     </div>
 
+    <!-- THESE 11 -->
     <div class="thesis">
-      <p><strong>These 11:</strong> Aufklärungsversuche stoßen häufig auf Abwehr.</p>
-      <textarea oninput="thesisFeedback(this,'fb11','Kritik bedroht das Selbstbild – Abwehr schützt das eigene moralische Selbstverständnis.')"></textarea>
-      <div class="feedback" id="fb11"></div>
+      <p><strong>These 11</strong><br>Aufklärungsversuche stoßen oft auf Abwehr.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Warum reagieren viele Menschen defensiv, wenn Antisemitismus benannt wird?</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_11','Weil die Kritik ihr Selbstbild als „guter Mensch“ bedroht. Statt das eigene Denken zu hinterfragen, wird der Vorwurf zurückgewiesen oder der Überbringer diskreditiert.')"></textarea>
+      <div class="feedback" id="tm_fb_11"></div>
     </div>
 
+    <!-- SCHLUSSTHESE -->
     <div class="thesis">
-      <p><strong>Schlussthese:</strong> Antisemitismus ist gesellschaftliche Normalität, nicht Ausnahme.</p>
-      <textarea oninput="thesisFeedback(this,'fb12','Meyers zentrale Botschaft: Selbstreflexion ist Voraussetzung für Veränderung.')"></textarea>
-      <div class="feedback" id="fb12"></div>
+      <p><strong>Schlussthese</strong><br>Antisemitismus ist gesellschaftliche Normalität, nicht Ausnahme.</p>
+      <p><strong>Kommentarfeld – Arbeitsauftrag:</strong> Formuliere in einem Satz, was Meyers zentrale Botschaft an nichtjüdische Leser:innen ist.</p>
+      <textarea oninput="tmThesisFeedback(this,'tm_fb_12','Antisemitismus verschwindet nicht durch gute Absichten, sondern nur durch bewusste Selbstreflexion – auch (und gerade) bei Menschen, die sich selbst für tolerant halten.')"></textarea>
+      <div class="feedback" id="tm_fb_12"></div>
     </div>
 
   </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 2. GRUNDWISSEN -->
+<!-- 2. GRUNDWISSEN: WAS IST ANTISEMITISMUS? (AUSGEBAUT) -->
 <!-- ===================================================== -->
-<section class="panel">
+<section class="panel" id="sec2">
   <h2>2. Grundwissen: Was ist Antisemitismus?</h2>
+
   <p>
-    Antisemitismus bezeichnet feindliche, abwertende oder
-    stereotype Vorstellungen über Juden als Gruppe.
+    Antisemitismus bezeichnet feindliche, abwertende oder stereotype Vorstellungen über Juden als Gruppe.
     Er äußert sich in Sprache, Bildern, Denkfiguren und Handlungen.
   </p>
+
+  <p>
+    Für Unterricht, Forschung, Politik und Medien existieren unterschiedliche Definitionen. Diese sind nicht „beliebig“,
+    sondern hängen davon ab, ob man Antisemitismus eher <strong>normativ (handlungsleitend)</strong> oder
+    <strong>analytisch (trennscharf beschreibend)</strong> fassen will.
+  </p>
+
+  <!-- 1. IHRA -->
+  <h3>1. IHRA-Definition (2016)</h3>
+  <p><em>„Antisemitismus ist eine bestimmte Wahrnehmung von Juden, die sich als Hass gegenüber Juden ausdrücken kann.“</em></p>
+  <p><strong>Merkmale</strong></p>
+  <ul>
+    <li>Fokus auf <strong>Wahrnehmung / Denkweise</strong></li>
+    <li>Hass kann sich richten gegen:
+      <ul>
+        <li>Juden als Personen</li>
+        <li>jüdische Einrichtungen</li>
+        <li>den Staat Israel (unter bestimmten Bedingungen)</li>
+      </ul>
+    </li>
+    <li>Ergänzt durch <strong>konkrete Beispiele</strong> (z. B. Doppelstandards, Dämonisierung)</li>
+  </ul>
+  <p><strong>Verwendung</strong></p>
+  <ul>
+    <li>Politik, Behörden, Schulen</li>
+    <li>Stark normativ</li>
+  </ul>
+
+  <!-- 2. EUMC -->
+  <h3>2. EUMC-Arbeitsdefinition (2005)</h3>
+  <p>Antisemitismus als <em>Feindseligkeit, Vorurteil oder Diskriminierung gegenüber Juden als Juden.</em></p>
+  <p><strong>Merkmale</strong></p>
+  <ul>
+    <li>Betonung von <strong>Vorurteilen</strong></li>
+    <li>Bezieht <strong>Sprache, Bilder, Handlungen</strong> ein</li>
+    <li>Vorläufer der IHRA-Definition</li>
+  </ul>
+  <p><strong>Verwendung</strong></p>
+  <ul>
+    <li>Forschung, Monitoring</li>
+    <li>Weniger politisch zugespitzt</li>
+  </ul>
+
+  <!-- 3. sozialwissenschaftlich -->
+  <h3>3. Sozialwissenschaftliche Minimaldefinition</h3>
+  <p><em>Antisemitismus ist eine Form von gruppenbezogener Menschenfeindlichkeit gegenüber Juden.</em></p>
+  <p><strong>Merkmale</strong></p>
+  <ul>
+    <li>Juden als <strong>soziale Gruppe</strong></li>
+    <li>Vergleichbar mit:
+      <ul>
+        <li>Rassismus</li>
+        <li>Sexismus</li>
+        <li>Antiziganismus</li>
+      </ul>
+    </li>
+    <li>Analytisch, nicht normativ</li>
+  </ul>
+  <p><strong>Verwendung</strong></p>
+  <ul>
+    <li>Soziologie</li>
+    <li>Bildungsarbeit</li>
+  </ul>
+
+  <!-- 4. historisch-ideologisch -->
+  <h3>4. Historisch-ideologische Definition</h3>
+  <p><em>Antisemitismus ist eine moderne Ideologie, die Juden als allmächtige, gefährliche Gegenmacht konstruiert.</em></p>
+  <p><strong>Merkmale</strong></p>
+  <ul>
+    <li>Entstehung im <strong>19. Jahrhundert</strong></li>
+    <li>Verschwörungsdenken</li>
+    <li>Juden als „Sündenböcke“</li>
+  </ul>
+  <p><strong>Verwendung</strong></p>
+  <ul>
+    <li>Geschichtsunterricht</li>
+    <li>Ideologiekritik</li>
+  </ul>
+
+  <!-- 5. sprach/diskurs -->
+  <h3>5. Sprach- und Diskursbezogene Definition</h3>
+  <p><em>Antisemitismus zeigt sich in Sprache, Metaphern, Bildern und Codes – auch ohne offene Gewalt.</em></p>
+  <p><strong>Merkmale</strong></p>
+  <ul>
+    <li>Fokus auf:
+      <ul>
+        <li>Stereotype</li>
+        <li>Chiffren („die da oben“, „Finanzeliten“)</li>
+        <li>Ironie, Andeutung</li>
+      </ul>
+    </li>
+    <li>Antisemitismus <strong>ohne explizite Judenfeindlichkeit</strong></li>
+  </ul>
+  <p><strong>Verwendung</strong></p>
+  <ul>
+    <li>Medienanalyse</li>
+    <li>Literatur- und Sprachunterricht</li>
+  </ul>
+
+  <!-- 6. kritisch -->
+  <h3>6. Kritische Definition (z. B. Stern)</h3>
+  <p>Antisemitismus als <em>System von Zuschreibungen</em>; nicht jede Israel-Kritik sei antisemitisch.</p>
+  <p><strong>Merkmale</strong></p>
+  <ul>
+    <li>Warnung vor <strong>Überdehnung des Begriffs</strong></li>
+    <li>Trennung von:
+      <ul>
+        <li>legitimer politischer Kritik</li>
+        <li>antisemitischen Mustern</li>
+      </ul>
+    </li>
+  </ul>
+  <p><strong>Verwendung</strong></p>
+  <ul>
+    <li>Akademische Debatten</li>
+    <li>Politische Bildung</li>
+  </ul>
+
+  <!-- Kurzvergleich Tabelle -->
+  <div class="panel-sub">
+    <h3>Kurzvergleich</h3>
+    <table style="width:100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="text-align:left; border-bottom:1px solid #ccc; padding:0.5rem;">Ansatz</th>
+          <th style="text-align:left; border-bottom:1px solid #ccc; padding:Hook="padding:0.5rem;">Fokus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">IHRA</td>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Wahrnehmung &amp; Hass</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">EUMC</td>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Vorurteil &amp; Diskriminierung</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Sozialwissenschaft</td>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Gruppenfeindlichkeit</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Historisch</td>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Ideologie &amp; Verschwörung</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Sprachlich</td>
+          <td style="padding:0.5rem; border-bottom:1px solid #eee;">Sprache &amp; Codes</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem;">Kritisch</td>
+          <td style="padding:0.5rem;">Begrenzung des Begriffs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Lernfolie / Thesenkarte + Kommentarfeld + Feedback -->
+  <div class="panel-sub">
+    <h3>Antisemitismus – Definitionen im Vergleich (Lernfolie)</h3>
+
+    <h4>🎯 Lernziel</h4>
+    <ul>
+      <li>Es gibt <strong>nicht die eine Antisemitismus-Definition</strong>.</li>
+      <li>Definitionen unterscheiden sich je nach <strong>Kontext</strong> (Schule, Forschung, Politik, Medien).</li>
+    </ul>
+
+    <h4>🟦 Thesenkarte</h4>
+    <p><strong>These</strong></p>
+    <p><strong>Antisemitismus ist kein einheitlich definierter Begriff, sondern wird je nach Kontext unterschiedlich bestimmt.</strong></p>
+
+    <h4>✏️ Kommentarfeld (Arbeitsauftrag)</h4>
+    <p>Beantworte stichwortartig:</p>
+    <ol>
+      <li>Warum ist es problematisch, Antisemitismus <strong>nur</strong> als körperliche Gewalt zu verstehen?</li>
+      <li>Welche Vorteile hat eine <strong>weite Definition</strong> (z. B. IHRA)?</li>
+      <li>Welche Vorteile hat eine <strong>enge / analytische Definition</strong> (z. B. sozialwissenschaftlich)?</li>
+      <li>In welchem Kontext wäre <strong>welche Definition</strong> besonders sinnvoll? (Schule / Forschung / Politik / Medien)</li>
+    </ol>
+
+    <textarea oninput="defFolieFeedback(this,'def_folie_fb')"></textarea>
+    <div class="feedback" id="def_folie_fb"></div>
+
+    <h4>🧠 Merksatz</h4>
+    <p><strong>Wie Antisemitismus definiert wird, entscheidet darüber, was wir sehen – und was wir übersehen.</strong></p>
+  </div>
+
+  <!-- NEU: Punkt 3 – mehrere interaktive Textfelder + Feedback -->
+  <div class="panel-sub">
+    <h3>3. Weite vs. enge Definition – Sicherung</h3>
+
+    <div class="question-block">
+      <p><strong>3a. Warum ist es problematisch, Antisemitismus nur als körperliche Gewalt zu verstehen?</strong></p>
+      <textarea oninput="defFieldFeedback(this,'fb_3a','Antisemitismus zeigt sich oft sprachlich, symbolisch und strukturell. Gewalt ist häufig der Endpunkt einer Eskalation, nicht der Anfang. Wenn man nur Gewalt zählt, übersieht man Alltagsantisemitismus und seine Normalisierung.')"></textarea>
+      <div class="feedback" id="fb_3a"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>3b. Welche Vorteile hat eine weite Definition (z. B. IHRA)?</strong></p>
+      <textarea oninput="defFieldFeedback(this,'fb_3b','Eine weite Definition macht verdeckte Formen sichtbar, dient Prävention und Schutz (auch von Institutionen) und ist praktisch für Politik/Schule. Sie kann schneller handlungsleitend wirken, weil sie mehr Phänomene erfasst.')"></textarea>
+      <div class="feedback" id="fb_3b"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>3c. Welche Vorteile hat eine enge / analytische Definition (z. B. sozialwissenschaftlich)?</strong></p>
+      <textarea oninput="defFieldFeedback(this,'fb_3c','Eine enge Definition ist trennschärfer, hilft in Forschung/Analyse und verhindert Begriffsverwässerung. Sie erlaubt präzise Vergleiche (z. B. zu anderen Formen gruppenbezogener Menschenfeindlichkeit) und klarere Diagnosen.')"></textarea>
+      <div class="feedback" id="fb_3c"></div>
+    </div>
+  </div>
+
+  <!-- NEU: Punkt 4 – Kontextzuordnung mit mehreren Feldern + Feedback -->
+  <div class="panel-sub">
+    <h3>4. Kontextabhängigkeit – Welche Definition ist wo sinnvoll?</h3>
+
+    <div class="question-block">
+      <p><strong>4a. Schule</strong> – Welche Definition(en) wären hier besonders sinnvoll? Begründe.</p>
+      <textarea oninput="defFieldFeedback(this,'fb_4a','In der Schule ist eine sensibilisierende, praxisnahe Definition hilfreich (z. B. IHRA / EUMC plus sprach- und diskursbezogene Perspektive), weil sie Alltagsformen sichtbar macht und Prävention ermöglicht. Wichtig ist dabei auch die Unterscheidung zwischen Kritik und antisemitischen Mustern.')"></textarea>
+      <div class="feedback" id="fb_4a"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>4b. Wissenschaft / Forschung</strong> – Welche Definition(en) wären hier besonders sinnvoll? Begründe.</p>
+      <textarea oninput="defFieldFeedback(this,'fb_4b','In der Forschung braucht es trennscharfe, analytische Definitionen (sozialwissenschaftliche Minimaldefinition, historisch-ideologisch, diskursanalytisch). Ziel ist Vergleichbarkeit, Präzision und begründete Kategorisierung, nicht primär politische Handlungsleitung.')"></textarea>
+      <div class="feedback" id="fb_4b"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>4c. Politik / Behörden</strong> – Welche Definition(en) wären hier besonders sinnvoll? Begründe.</p>
+      <textarea oninput="defFieldFeedback(this,'fb_4c','In Politik/Behörden sind normativ-handlungsleitende Definitionen (IHRA) oft zentral, weil sie Standards für Monitoring, Schutzmaßnahmen und Interventionen bieten. Gleichzeitig ist die sorgfältige Anwendung nötig, um legitime Kritik nicht pauschal zu delegitimieren.')"></textarea>
+      <div class="feedback" id="fb_4c"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>4d. Medien / Öffentlichkeit</strong> – Welche Definition(en) wären hier besonders sinnvoll? Begründe.</p>
+      <textarea oninput="defFieldFeedback(this,'fb_4d','In Medien ist die sprach- und diskursbezogene Perspektive besonders wichtig (Codes, Chiffren, Frames), ergänzt durch IHRA/EUMC als Orientierung. Medien müssen Deutungsmuster sichtbar machen, ohne vorschnell zu etikettieren – daher ist Kontextualisierung zentral.')"></textarea>
+      <div class="feedback" id="fb_4d"></div>
+    </div>
+  </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 3. DER 7. OKTOBER 2023 -->
+<!-- 3. DER 7. OKTOBER 2023 (EXTERNER LINK + INTERAKTIV) -->
 <!-- ===================================================== -->
-<section class="panel">
+<section class="panel" id="sec3">
   <h2>3. Der 7. Oktober 2023</h2>
+
   <p>
-    Am 7. Oktober 2023 verübte die Hamas einen groß angelegten
-    Terrorangriff auf Israel. Über 1’200 Menschen wurden ermordet,
-    viele verschleppt. Der Angriff gilt als Zäsur.
+    Am 7. Oktober 2023 verübte die Hamas einen groß angelegten Terrorangriff auf Israel.
+    Über 1’200 Menschen wurden ermordet, viele verschleppt. Der Angriff gilt als Zäsur und
+    hat weltweit politische, gesellschaftliche und emotionale Folgen.
   </p>
-  <p>
-    🎬 <a href="https://www.dropbox.com/scl/fi/g1qagill5dhu823rkg8vo/Doku-Israel-Gaza-und-der-Krieg-auslandsjournal.mp4?dl=0" target="_blank">Film extern öffnen (Dropbox)</a>
+
+  <p class="no-print">
+    🎬 <strong>Film extern öffnen (Dropbox):</strong><br>
+    <a href="https://www.dropbox.com/scl/fi/g1qagill5dhu823rkg8vo/Doku-Israel-Gaza-und-der-Krieg-auslandsjournal.mp4?rlkey=td1t83zdmbi50k0ru9wgicsqp&st=1rpgdvmi&dl=0"
+       target="_blank" rel="noopener noreferrer">
+      Doku: Israel, Gaza und der Krieg (auslandsjournal)
+    </a>
+    <br><span class="hint">Öffnet in einem neuen Tab (externe Quelle).</span>
   </p>
+
+  <!-- NEU: mehrere interaktive Sicherungsfelder + Sofortfeedback -->
+  <div class="panel-sub">
+    <h3>Sicherung (nach dem Film)</h3>
+
+    <div class="question-block">
+      <p><strong>1. Welche Szene oder Aussage hat dich besonders beschäftigt?</strong></p>
+      <textarea oninput="genericFeedback(this,'fb_oct_1','Weiterdenken: Warum gerade diese Szene? Was sagt deine Auswahl über deine Perspektive (Empathie, Fokus, Vorwissen) aus?')"></textarea>
+      <div class="feedback" id="fb_oct_1"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>2. Welche Gefühle löst der Film bei dir aus – und wie könnten sie deine Wahrnehmung beeinflussen?</strong></p>
+      <textarea oninput="genericFeedback(this,'fb_oct_2','Reflexion: Gefühle sind Teil politischer Wahrnehmung. Welche Information wirkt dadurch stärker, welche vielleicht schwächer? Wie kannst du beides (Fakten + Emotionen) auseinanderhalten?')"></textarea>
+      <div class="feedback" id="fb_oct_2"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>3. Welche Fragen bleiben offen? Formuliere mindestens zwei präzise Fragen.</strong></p>
+      <textarea oninput="genericFeedback(this,'fb_oct_3','Vertiefung: Gute Fragen sind offen, konkret und respektvoll. Prüfe: Fragst du nach Ursachen, Folgen, Perspektiven, Begriffen oder Belegen?')"></textarea>
+      <div class="feedback" id="fb_oct_3"></div>
+    </div>
+  </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 4. ANTISEMITISMUS IN DER SCHWEIZ -->
+<!-- 4. ANTISEMITISMUS IN DER SCHWEIZ HEUTE (EXTERN + INTERAKTIV) -->
 <!-- ===================================================== -->
-<section class="panel">
+<section class="panel" id="sec4">
   <h2>4. Antisemitismus in der Schweiz heute</h2>
+
   <p>
-    Der SRF-Dokumentarfilm zeigt aktuelle Erscheinungsformen
-    von Antisemitismus im öffentlichen Raum.
+    Der folgende SRF-Dokumentarfilm zeigt, wie sich Antisemitismus aktuell in der Schweiz äußert –
+    im Alltag, in Schulen und im öffentlichen Raum.
   </p>
-  <p>
-    🎬 <a href="https://www.dropbox.com/scl/fi/km25neyaiz82nilfzu7cj/Antisemitismus-Judenhass-in-der-Schweiz-DOK-SRF.mp4?dl=0" target="_blank">SRF DOK extern öffnen</a>
+
+  <p class="no-print">
+    🎬 <strong>Film extern öffnen (Dropbox):</strong><br>
+    <a href="https://www.dropbox.com/scl/fi/km25neyaiz82nilfzu7cj/Antisemitismus-Judenhass-in-der-Schweiz-DOK-SRF.mp4?rlkey=lf108kr3bv73yrjt51yje9lvi&st=6gka3kdn&dl=0"
+       target="_blank" rel="noopener noreferrer">
+      SRF DOK: Antisemitismus – Judenhass in der Schweiz
+    </a>
+    <br><span class="hint">Öffnet in einem neuen Tab (externe Quelle).</span>
   </p>
+
+  <!-- NEU: mehrere interaktive Sicherungsfelder + Sofortfeedback -->
+  <div class="panel-sub">
+    <h3>Sicherung (nach dem Film)</h3>
+
+    <div class="question-block">
+      <p><strong>1. Welche Situationen von Antisemitismus werden geschildert? Ordne sie (z. B. Sprache / Verhalten / Institution / Online).</strong></p>
+      <textarea oninput="genericFeedback(this,'fb_ch_1','Analyse: Versuche zu unterscheiden: offene Feindseligkeit vs. subtile Codes; Einzelfall vs. Muster; privat vs. institutionell. Diese Unterscheidung hilft bei Prävention und Reaktion.')"></textarea>
+      <div class="feedback" id="fb_ch_1"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>2. Was hat dich besonders überrascht oder irritiert – und warum?</strong></p>
+      <textarea oninput="genericFeedback(this,'fb_ch_2','Weiterdenken: Überraschung zeigt oft einen Erwartungsbruch. Welche Annahme über „die Schweiz“ oder „Antisemitismus“ wird bei dir herausgefordert?')"></textarea>
+      <div class="feedback" id="fb_ch_2"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>3. Wo erkennst du Parallelen zum Text von Thomas Meyer („Die jüdische Nase“)? Nenne mindestens zwei Parallelen.</strong></p>
+      <textarea oninput="genericFeedback(this,'fb_ch_3','Verknüpfung: Achte besonders auf Alltagsformen (Witze, Kommentare, Zuschreibungen) und die Abwehr („nicht so gemeint“). Genau dort liegt die Brücke zwischen Literatur und Gegenwart.')"></textarea>
+      <div class="feedback" id="fb_ch_3"></div>
+    </div>
+  </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 5. ÜBERLEITUNG -->
+<!-- 5. VON INFORMATION ZUR FRAGE -->
 <!-- ===================================================== -->
-<section class="panel">
+<section class="panel" id="sec5">
   <h2>5. Von Information zur Frage</h2>
+
   <p>
-    Ziel ist es, aus Information und Reflexion
-    eigene, respektvolle Fragen zu entwickeln.
+    Ziel dieser Lernumgebung ist es, aus Information und Reflexion eigene, respektvolle und tragfähige Fragen zu entwickeln.
+    Gute Fragen sind:
   </p>
+
+  <ul>
+    <li><strong>offen</strong> (nicht nur Ja/Nein)</li>
+    <li><strong>konkret</strong> (auf eine Beobachtung bezogen)</li>
+    <li><strong>respektvoll</strong> (nicht anklagend, nicht entwertend)</li>
+    <li><strong>lernorientiert</strong> (Verstehen statt „Rechthaben“)</li>
+  </ul>
+
+  <div class="panel-sub">
+    <h3>Fragebaukasten (Kurzcheck)</h3>
+    <p class="no-print">Schreibe einen ersten Entwurf. Sofortfeedback hilft dir, die Frage zu schärfen.</p>
+
+    <div class="question-block">
+      <p><strong>Formuliere eine offene Frage, die mit „Wie…?“ oder „Warum…?“ beginnt.</strong></p>
+      <textarea oninput="questionPolish(this,'fb_q_1')"></textarea>
+      <div class="feedback" id="fb_q_1"></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>Formuliere eine Frage, die ausdrücklich nach Sprache/Begriffen fragt (z. B. „Was meint…?“).</strong></p>
+      <textarea oninput="questionPolish(this,'fb_q_2')"></textarea>
+      <div class="feedback" id="fb_q_2"></div>
+    </div>
+  </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 6. FRAGEN AN THOMAS MEYER -->
+<!-- 6. DEINE FRAGEN AN THOMAS MEYER + PDF-EXPORT -->
 <!-- ===================================================== -->
-<section class="panel">
+<section class="panel" id="sec6">
   <h2>6. Deine Fragen an Thomas Meyer</h2>
 
-  <label>Frage zu Sprache oder Literatur</label>
-  <textarea></textarea>
+  <p class="no-print">
+    Schreibe hier deine finalen Fragen. Danach kannst du sie als PDF exportieren (Druckdialog).
+    Tipp: Formuliere möglichst konkret, worauf du dich beziehst (Textstelle / Filmbeobachtung / Begriff).
+  </p>
 
-  <label>Frage zu Antisemitismus heute</label>
-  <textarea></textarea>
+  <div class="question-block">
+    <label><strong>Frage 1 – Sprache/Literatur (Text „Die jüdische Nase“)</strong></label>
+    <textarea id="final_q1"></textarea>
+  </div>
 
-  <label>Persönliche oder gesellschaftliche Frage</label>
-  <textarea></textarea>
+  <div class="question-block">
+    <label><strong>Frage 2 – Antisemitismus heute (Schweiz / Alltag / Schule)</strong></label>
+    <textarea id="final_q2"></textarea>
+  </div>
 
-  <button onclick="window.print()">📄 Fragen als PDF exportieren</button>
+  <div class="question-block">
+    <label><strong>Frage 3 – Israel/Gaza/Öffentlichkeit (Unterscheidung Kritik vs. Muster)</strong></label>
+    <textarea id="final_q3"></textarea>
+  </div>
+
+  <div class="question-block">
+    <label><strong>Frage 4 – Persönliche Perspektive (Schreiben, Verantwortung, Wirkung)</strong></label>
+    <textarea id="final_q4"></textarea>
+  </div>
+
+  <div class="panel-sub no-print">
+    <button onclick="preparePrint()">📄 Fragen als PDF exportieren</button>
+    <span class="hint">Druckdialog: Ziel „Als PDF sichern“ auswählen.</span>
+  </div>
+
+  <!-- NEU: Print-only Bereich (für sauberen PDF-Export) -->
+  <div class="print-only">
+    <h2>Fragen an Thomas Meyer (Export)</h2>
+    <p><strong>Frage 1:</strong> <span id="p_q1"></span></p>
+    <p><strong>Frage 2:</strong> <span id="p_q2"></span></p>
+    <p><strong>Frage 3:</strong> <span id="p_q3"></span></p>
+    <p><strong>Frage 4:</strong> <span id="p_q4"></span></p>
+  </div>
 </section>
 
 </main>
@@ -213,6 +599,97 @@
 <footer>
   <p>Diese Lernumgebung ist ausschließlich für den schulischen Unterricht bestimmt.</p>
 </footer>
+
+<!-- ===================================================== -->
+<!-- NEU: ALLE INTERAKTIVEN FEEDBACK-FUNKTIONEN (in dieser Datei) -->
+<!-- ===================================================== -->
+<script>
+  // NEU: Grundregel – Feedback erst ab bestimmter Länge anzeigen
+  function showIfEnough(textarea, minChars) {
+    return textarea.value.trim().length >= minChars;
+  }
+
+  // NEU: Thesen-Feedback (Punkt 1)
+  function tmThesisFeedback(textarea, feedbackId, feedbackText) {
+    const box = document.getElementById(feedbackId);
+    if (showIfEnough(textarea, 40)) {
+      box.textContent = feedbackText;
+    } else {
+      box.textContent = "";
+    }
+  }
+
+  // NEU: Allgemeines „Weiterdenken“-Feedback (Punkt 3/4 Filmsicherung etc.)
+  function genericFeedback(textarea, feedbackId, feedbackText) {
+    const box = document.getElementById(feedbackId);
+    if (showIfEnough(textarea, 35)) {
+      box.textContent = feedbackText;
+    } else {
+      box.textContent = "";
+    }
+  }
+
+  // NEU: Definitionen-Folie (großes Kommentarfeld)
+  function defFolieFeedback(textarea, feedbackId) {
+    const box = document.getElementById(feedbackId);
+    if (!showIfEnough(textarea, 60)) { box.textContent = ""; return; }
+
+    box.textContent =
+      "Sofort-Feedback: Prüfe, ob du (1) Alltagsformen (Sprache/Codes), (2) Nutzen einer weiten Definition (Sichtbarkeit/Prävention), (3) Nutzen einer engen Definition (Trennschärfe/Analyse) und (4) Kontext (Schule/Forschung/Politik/Medien) klar unterscheidest. Ergänze mindestens ein konkretes Beispiel.";
+  }
+
+  // NEU: Definitionen – einzelne Felder (Punkt 3 & 4)
+  function defFieldFeedback(textarea, feedbackId, feedbackText) {
+    const box = document.getElementById(feedbackId);
+    if (showIfEnough(textarea, 40)) {
+      box.textContent = feedbackText;
+    } else {
+      box.textContent = "";
+    }
+  }
+
+  // NEU: Frage-Schärfen (Punkt 5)
+  function questionPolish(textarea, feedbackId) {
+    const box = document.getElementById(feedbackId);
+    const t = textarea.value.trim();
+    if (t.length < 25) { box.textContent = ""; return; }
+
+    let msg = "Sofort-Feedback: ";
+    const lower = t.toLowerCase();
+
+    // Offenheit
+    if (lower.startsWith("ist ") || lower.startsWith("sind ") || lower.startsWith("war ") || lower.startsWith("hat ")) {
+      msg += "Deine Frage klingt eher nach Ja/Nein. Versuche sie als „Wie…?“/„Warum…?“ umzubauen. ";
+    } else {
+      msg += "Die Frage wirkt grundsätzlich offen genug. ";
+    }
+
+    // Bezug
+    if (!(lower.includes("text") || lower.includes("mayer") || lower.includes("film") || lower.includes("doku") || lower.includes("beispiel") || lower.includes("szene"))) {
+      msg += "Füge einen konkreten Bezug hinzu (Textstelle, Szene, Begriff). ";
+    } else {
+      msg += "Gut: Du nennst einen Bezugspunkt. ";
+    }
+
+    // Ton
+    if (lower.includes("warum machst du") || lower.includes("wieso machst du") || lower.includes("stimmt es, dass")) {
+      msg += "Achte auf einen nicht-anklagenden Ton: eher „Wie erlebst du…?“/„Wie würdest du erklären…?“ ";
+    } else {
+      msg += "Ton wirkt respektvoll. ";
+    }
+
+    box.textContent = msg;
+  }
+
+  // NEU: PDF-Export – Print-only Bereich füllen
+  function preparePrint() {
+    document.getElementById("p_q1").textContent = document.getElementById("final_q1").value.trim();
+    document.getElementById("p_q2").textContent = document.getElementById("final_q2").value.trim();
+    document.getElementById("p_q3").textContent = document.getElementById("final_q3").value.trim();
+    document.getElementById("p_q4").textContent = document.getElementById("final_q4").value.trim();
+    window.print();
+  }
+</script>
 
 </body>
 </html>
