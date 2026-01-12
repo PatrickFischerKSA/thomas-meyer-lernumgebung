@@ -17,9 +17,7 @@
 
 <header class="hero">
   <h1>Thomas Meyer – Sprache, Antisemitismus, Gegenwart</h1>
-  <p class="subtitle">
-    Lernumgebung Sek II · Vorbereitung auf eine Autorenlesung
-  </p>
+  <p class="subtitle">Lernumgebung Sek II · Vorbereitung auf eine Autorenlesung</p>
 </header>
 
 <main>
@@ -31,86 +29,112 @@
   <h2>1. Einstieg: Sprache ist nie harmlos</h2>
 
   <p>
-    Thomas Meyer berichtet davon, wie ihm gesagt wurde:
-    <em>„Ich dachte, Juden erkennt man an der Nase.“</em>
+    Thomas Meyer beschreibt in seinem Text „Die jüdische Nase“,
+    wie scheinbar beiläufige Bemerkungen antisemitische Klischees
+    reproduzieren. Der Satz
+    <em>„Ich dachte, Juden erkennt man an der Nase“</em>
+    steht exemplarisch für einen Antisemitismus, der nicht
+    aggressiv auftritt, sondern als „harmlos“ wahrgenommen wird.
   </p>
 
   <p>
-    Solche Aussagen sind keine Ausnahmen. Sie zeigen, wie tief
-    antisemitische Klischees im Alltag verankert sind – oft ohne
-    böse Absicht, aber mit klarer Wirkung.
+    Gerade diese Alltäglichkeit macht ihn gesellschaftlich
+    wirksam und schwer angreifbar.
   </p>
 
   <a href="assets/pdf/Meyer_Nase.pdf" target="_blank" rel="noopener noreferrer">
-    📄 Text lesen: Meyer – Nase (PDF)
+    📄 Text lesen: Thomas Meyer – „Die jüdische Nase“ (PDF)
   </a>
 
   <!-- ===================== -->
-  <!-- NEU: THESEN-RESSOURCE -->
+  <!-- THESENBLOCK (12/12) -->
   <!-- ===================== -->
 
   <div class="panel-sub">
     <h3>Thomas Meyer: „Die jüdische Nase“ – Thesen & Reflexion</h3>
 
-    <!-- THESE 1 -->
+    <script>
+      function thesisFeedback(el, id, text) {
+        if (el.value.trim().length >= 40) {
+          document.getElementById(id).textContent = text;
+        } else {
+          document.getElementById(id).textContent = "";
+        }
+      }
+    </script>
+
     <div class="thesis">
-      <p><strong>These 1:</strong><br>
-      Antisemitismus wird gesellschaftlich fast ausschließlich mit körperlicher Gewalt gleichgesetzt.</p>
-
-      <label>Kommentarfeld – Arbeitsauftrag:</label>
-      <textarea oninput="tmFeedback(this, 'fb-tm-1')"
-        data-keywords="sprache,denken,alltäglich,unsichtbar,verharmlosung"></textarea>
-
-      <div class="feedback" id="fb-tm-1"></div>
+      <p><strong>These 1:</strong> Antisemitismus wird gesellschaftlich fast ausschließlich mit körperlicher Gewalt gleichgesetzt.</p>
+      <textarea oninput="thesisFeedback(this,'fb1','Diese enge Definition blendet sprachliche und gedankliche Formen aus. Dadurch bleibt Alltagsantisemitismus gesellschaftlich akzeptiert.')"></textarea>
+      <div class="feedback" id="fb1"></div>
     </div>
 
-    <!-- THESE 2 -->
     <div class="thesis">
-      <p><strong>These 2:</strong><br>
-      Der gewaltlose Antisemitismus ist die häufigste, aber am schwersten erkennbare Form.</p>
-
-      <label>Kommentarfeld – Arbeitsauftrag:</label>
-      <textarea oninput="tmFeedback(this, 'fb-tm-2')"
-        data-keywords="witz,humor,klischee,normal,meinung"></textarea>
-
-      <div class="feedback" id="fb-tm-2"></div>
+      <p><strong>These 2:</strong> Der gewaltlose Antisemitismus ist die häufigste, aber am schwersten erkennbare Form.</p>
+      <textarea oninput="thesisFeedback(this,'fb2','Gerade weil diese Form ohne offene Aggression auskommt, wird sie selten als Antisemitismus erkannt oder benannt.')"></textarea>
+      <div class="feedback" id="fb2"></div>
     </div>
 
-    <!-- THESE 3 -->
     <div class="thesis">
-      <p><strong>These 3:</strong><br>
-      Gewaltloser Antisemitismus stammt aus der gesellschaftlichen Mitte.</p>
-
-      <label>Kommentarfeld – Arbeitsauftrag:</label>
-      <textarea oninput="tmFeedback(this, 'fb-tm-3')"
-        data-keywords="mitte,tolerant,gebildet,selbstbild"></textarea>
-
-      <div class="feedback" id="fb-tm-3"></div>
+      <p><strong>These 3:</strong> Gewaltloser Antisemitismus stammt aus der gesellschaftlichen Mitte.</p>
+      <textarea oninput="thesisFeedback(this,'fb3','Menschen aus der gesellschaftlichen Mitte sehen sich selbst als tolerant und reflektiert – das erschwert Selbstkritik.')"></textarea>
+      <div class="feedback" id="fb3"></div>
     </div>
 
-    <!-- THESE 4 -->
     <div class="thesis">
-      <p><strong>These 4:</strong><br>
-      Jüdische Identität wird oft als Erklärung für individuelles Verhalten benutzt.</p>
-
-      <label>Kommentarfeld – Arbeitsauftrag:</label>
-      <textarea oninput="tmFeedback(this, 'fb-tm-4')"
-        data-keywords="individualität,verallgemeinerung,kategorie"></textarea>
-
-      <div class="feedback" id="fb-tm-4"></div>
+      <p><strong>These 4:</strong> Jüdische Identität wird oft als Erklärung für individuelles Verhalten benutzt.</p>
+      <textarea oninput="thesisFeedback(this,'fb4','Individuelles Verhalten wird kollektiv gedeutet. Das entzieht jüdischen Menschen ihre Individualität.')"></textarea>
+      <div class="feedback" id="fb4"></div>
     </div>
 
-    <!-- THESE 5 -->
     <div class="thesis">
-      <p><strong>These 5:</strong><br>
-      Auch positive Zuschreibungen gegenüber Juden sind antisemitisch.</p>
-
-      <label>Kommentarfeld – Arbeitsauftrag:</label>
-      <textarea oninput="tmFeedback(this, 'fb-tm-5')"
-        data-keywords="positiv,stereotyp,erwartung"></textarea>
-
-      <div class="feedback" id="fb-tm-5"></div>
+      <p><strong>These 5:</strong> Auch positive Zuschreibungen gegenüber Juden sind antisemitisch.</p>
+      <textarea oninput="thesisFeedback(this,'fb5','Positive Stereotype bleiben Stereotype: Sie reduzieren Menschen auf Erwartungen.')"></textarea>
+      <div class="feedback" id="fb5"></div>
     </div>
+
+    <div class="thesis">
+      <p><strong>These 6:</strong> Antisemitische Klischees haben historische Ursprünge, die bis heute wirken.</p>
+      <textarea oninput="thesisFeedback(this,'fb6','Historische Bilder werden kulturell weitergegeben und unkritisch reproduziert.')"></textarea>
+      <div class="feedback" id="fb6"></div>
+    </div>
+
+    <div class="thesis">
+      <p><strong>These 7:</strong> Israel wird häufig mit „den Juden“ gleichgesetzt.</p>
+      <textarea oninput="thesisFeedback(this,'fb7','Diese Gleichsetzung macht jüdische Menschen kollektiv verantwortlich für Staatspolitik.')"></textarea>
+      <div class="feedback" id="fb7"></div>
+    </div>
+
+    <div class="thesis">
+      <p><strong>These 8:</strong> Antisemitische Aussagen werden oft als Humor oder Meinung verteidigt.</p>
+      <textarea oninput="thesisFeedback(this,'fb8','Meyer betont: Entscheidend ist die Wirkung – nicht die behauptete Absicht.')"></textarea>
+      <div class="feedback" id="fb8"></div>
+    </div>
+
+    <div class="thesis">
+      <p><strong>These 9:</strong> Erfahrungen jüdischer Menschen werden häufig relativiert.</p>
+      <textarea oninput="thesisFeedback(this,'fb9','Betroffenen wird Überempfindlichkeit unterstellt – ihre Erfahrung wird entwertet.')"></textarea>
+      <div class="feedback" id="fb9"></div>
+    </div>
+
+    <div class="thesis">
+      <p><strong>These 10:</strong> Antisemitismus beginnt bei Sprache und Denken, nicht bei Gewalt.</p>
+      <textarea oninput="thesisFeedback(this,'fb10','Sprache schafft Denkmuster, die Ausgrenzung normalisieren.')"></textarea>
+      <div class="feedback" id="fb10"></div>
+    </div>
+
+    <div class="thesis">
+      <p><strong>These 11:</strong> Aufklärungsversuche stoßen häufig auf Abwehr.</p>
+      <textarea oninput="thesisFeedback(this,'fb11','Kritik bedroht das Selbstbild – Abwehr schützt das eigene moralische Selbstverständnis.')"></textarea>
+      <div class="feedback" id="fb11"></div>
+    </div>
+
+    <div class="thesis">
+      <p><strong>Schlussthese:</strong> Antisemitismus ist gesellschaftliche Normalität, nicht Ausnahme.</p>
+      <textarea oninput="thesisFeedback(this,'fb12','Meyers zentrale Botschaft: Selbstreflexion ist Voraussetzung für Veränderung.')"></textarea>
+      <div class="feedback" id="fb12"></div>
+    </div>
+
   </div>
 </section>
 
@@ -119,22 +143,11 @@
 <!-- ===================================================== -->
 <section class="panel">
   <h2>2. Grundwissen: Was ist Antisemitismus?</h2>
-
-  <ul>
-    <li>Antisemitismus beginnt nicht erst bei körperlicher Gewalt.</li>
-    <li>Er äußert sich in Sprache, Bildern, Witzen und Zuschreibungen.</li>
-    <li>Oft wird er abgestritten oder verharmlost.</li>
-  </ul>
-
   <p>
-    Besonders problematisch ist Antisemitismus dort, wo er aus der
-    gesellschaftlichen Mitte kommt und als „normal“ gilt.
+    Antisemitismus bezeichnet feindliche, abwertende oder
+    stereotype Vorstellungen über Juden als Gruppe.
+    Er äußert sich in Sprache, Bildern, Denkfiguren und Handlungen.
   </p>
-
-  <a href="https://www.gra.ch/bildung/online-zitatkarten/"
-     target="_blank" rel="noopener noreferrer">
-    🔗 GRA – Online-Zitatkarten zu Antisemitismus
-  </a>
 </section>
 
 <!-- ===================================================== -->
@@ -142,40 +155,14 @@
 <!-- ===================================================== -->
 <section class="panel">
   <h2>3. Der 7. Oktober 2023</h2>
-
   <p>
     Am 7. Oktober 2023 verübte die Hamas einen groß angelegten
     Terrorangriff auf Israel. Über 1’200 Menschen wurden ermordet,
-    viele verschleppt. Der Angriff gilt als Zäsur und hatte
-    weltweite politische, gesellschaftliche und emotionale Folgen.
+    viele verschleppt. Der Angriff gilt als Zäsur.
   </p>
-
   <p>
-    🎬 <strong>Film extern öffnen (Dropbox):</strong><br>
-    <a href="https://www.dropbox.com/scl/fi/g1qagill5dhu823rkg8vo/Doku-Israel-Gaza-und-der-Krieg-auslandsjournal.mp4?rlkey=td1t83zdmbi50k0ru9wgicsqp&dl=0"
-       target="_blank" rel="noopener noreferrer">
-      Israel, Gaza und der Krieg – auslandsjournal
-    </a>
-    <br><span class="hint">Öffnet in einem neuen Tab.</span>
+    🎬 <a href="https://www.dropbox.com/scl/fi/g1qagill5dhu823rkg8vo/Doku-Israel-Gaza-und-der-Krieg-auslandsjournal.mp4?dl=0" target="_blank">Film extern öffnen (Dropbox)</a>
   </p>
-
-  <div class="question-block">
-    <p><strong>Welche Szene oder Aussage hat dich besonders beschäftigt?</strong></p>
-    <textarea oninput="feedbackOkt1(this)"></textarea>
-    <div class="feedback" id="fb-okt-1"></div>
-  </div>
-
-  <div class="question-block">
-    <p><strong>Welche Gefühle löst der Film bei dir aus?</strong></p>
-    <textarea oninput="feedbackOkt2(this)"></textarea>
-    <div class="feedback" id="fb-okt-2"></div>
-  </div>
-
-  <div class="question-block">
-    <p><strong>Welche Fragen bleiben für dich offen?</strong></p>
-    <textarea oninput="feedbackOkt3(this)"></textarea>
-    <div class="feedback" id="fb-okt-3"></div>
-  </div>
 </section>
 
 <!-- ===================================================== -->
@@ -183,39 +170,13 @@
 <!-- ===================================================== -->
 <section class="panel">
   <h2>4. Antisemitismus in der Schweiz heute</h2>
-
   <p>
-    Der folgende SRF-Dokumentarfilm zeigt, wie sich Antisemitismus
-    aktuell in der Schweiz äußert – im Alltag, in Schulen und im
-    öffentlichen Raum.
+    Der SRF-Dokumentarfilm zeigt aktuelle Erscheinungsformen
+    von Antisemitismus im öffentlichen Raum.
   </p>
-
   <p>
-    🎬 <strong>Film extern öffnen (Dropbox):</strong><br>
-    <a href="https://www.dropbox.com/scl/fi/km25neyaiz82nilfzu7cj/Antisemitismus-Judenhass-in-der-Schweiz-DOK-SRF.mp4?rlkey=lf108kr3bv73yrjt51yje9lvi&dl=0"
-       target="_blank" rel="noopener noreferrer">
-      SRF DOK: Antisemitismus – Judenhass in der Schweiz
-    </a>
-    <br><span class="hint">Öffnet in einem neuen Tab.</span>
+    🎬 <a href="https://www.dropbox.com/scl/fi/km25neyaiz82nilfzu7cj/Antisemitismus-Judenhass-in-der-Schweiz-DOK-SRF.mp4?dl=0" target="_blank">SRF DOK extern öffnen</a>
   </p>
-
-  <div class="question-block">
-    <p><strong>Welche Situationen von Antisemitismus werden geschildert?</strong></p>
-    <textarea oninput="feedbackCH1(this)"></textarea>
-    <div class="feedback" id="fb-ch-1"></div>
-  </div>
-
-  <div class="question-block">
-    <p><strong>Was hat dich besonders überrascht oder irritiert?</strong></p>
-    <textarea oninput="feedbackCH2(this)"></textarea>
-    <div class="feedback" id="fb-ch-2"></div>
-  </div>
-
-  <div class="question-block">
-    <p><strong>Wo erkennst du Parallelen zum Text von Thomas Meyer?</strong></p>
-    <textarea oninput="feedbackCH3(this)"></textarea>
-    <div class="feedback" id="fb-ch-3"></div>
-  </div>
 </section>
 
 <!-- ===================================================== -->
@@ -223,10 +184,9 @@
 <!-- ===================================================== -->
 <section class="panel">
   <h2>5. Von Information zur Frage</h2>
-
   <p>
-    Ziel dieser Lernumgebung ist es, aus Information und Reflexion
-    eigene, respektvolle und tragfähige Fragen zu entwickeln.
+    Ziel ist es, aus Information und Reflexion
+    eigene, respektvolle Fragen zu entwickeln.
   </p>
 </section>
 
@@ -254,7 +214,5 @@
   <p>Diese Lernumgebung ist ausschließlich für den schulischen Unterricht bestimmt.</p>
 </footer>
 
-<script src="js/feedback.js"></script>
-<script src="js/thomas-meyer-feedback.js"></script>
 </body>
 </html>
