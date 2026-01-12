@@ -93,3 +93,16 @@ textarea {
   font-size: 0.95rem;
   color: #555;
 }
+.panel-sub {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid #ddd;
+}
+
+.thesis {
+  margin-top: 1.5rem;
+}
+
+.thesis textarea {
+  margin-top: 0.5rem;
+}
