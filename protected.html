@@ -1,23 +1,26 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Thomas Meyer – Sprache, Antisemitismus, Gegenwart</title>
+  <title>Thomas Meyer – Sprache, Antisemitismus, Gegenwart (Protected)</title>
 
   <!-- Bestehendes CSS aus Repo -->
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Zugriffsschutz (wie vereinbart) -->
+  <!-- Zugriffsschutz -->
   <script>
     if (sessionStorage.getItem("access_granted") !== "true") {
       window.location.href = "index.html";
     }
   </script>
 
-  <!-- NEU: Hintergrundbild transparent über die ganze Seite (ohne style.css zu zerstören) -->
+  <!-- =========================================================
+       NEU (additiv): Hintergrund transparent + UI für Buttons/Export/Feedback
+       ========================================================= -->
   <style>
-    /* NEU: transparenter Hintergrund über gesamte Seite */
+    /* Transparentes Hintergrundbild über ganze Seite */
     body {
       position: relative;
       min-height: 100vh;
@@ -27,39 +30,57 @@
       position: fixed;
       inset: 0;
       background: url("assets/img/bg.jpg") center center / cover no-repeat;
-      opacity: 0.18;           /* transparent */
+      opacity: 0.18;
       pointer-events: none;
       z-index: -1;
     }
 
-    /* NEU: kleine UI-Stütze – nur additiv */
+    /* Additive Hilfs-Klassen (ohne Zerstörung bestehender Styles) */
     .resource-list { margin-top: 1rem; }
     .resource-list ul { margin: 0.5rem 0 0 1.2rem; }
     .resource-list li { margin: 0.35rem 0; }
     .hint { display:inline-block; margin-top:0.25rem; font-size:0.95rem; color:#555; }
-
     .panel-sub { margin-top: 1.5rem; padding-top: 1rem; border-top: 2px solid #ddd; }
-    .thesis { margin-top: 1.25rem; }
-    .question-block { margin-top: 1.25rem; }
-    .question-block textarea,
-    .thesis textarea { width: 100%; min-height: 120px; margin-top: 0.5rem; }
-    .feedback { margin-top: 0.5rem; font-style: italic; color:#444; }
 
-    /* NEU: Druck – nur Abschnitt 6 exportieren */
+    .task { margin-top: 1.25rem; }
+    .task label { display:block; font-weight: 700; margin-bottom: 0.35rem; }
+    .task textarea { width: 100%; min-height: 120px; margin-top: 0.35rem; }
+    .task .btnrow { margin-top: 0.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .task button { cursor: pointer; }
+
+    .feedback {
+      margin-top: 0.6rem;
+      padding: 0.65rem 0.75rem;
+      border-left: 4px solid #999;
+      background: rgba(255,255,255,0.65);
+      color:#333;
+      font-style: italic;
+      display: none; /* WICHTIG: Feedback kommt erst nach Abschicken */
+    }
+    .feedback.visible { display:block; }
+
+    .exportrow { margin-top: 1rem; display:flex; gap:0.5rem; flex-wrap:wrap; }
+    .exportrow .hint { margin-top: 0; }
+
+    /* Print-Only Bereich (für Section-Export) */
+    .print-only { display: none; }
     @media print {
       header, footer, .no-print { display: none !important; }
-      .print-only { display: block !important; }
-      body::before { display: none !important; }
+      body::before { display:none !important; }
+      .print-only { display:block !important; }
+      .panel { box-shadow:none !important; }
       textarea { border: 1px solid #999 !important; }
-      .panel { box-shadow: none !important; margin: 0 !important; max-width: none !important; }
+      .feedback { display:block !important; } /* in Print anzeigen, falls sichtbar gemacht */
     }
-    .print-only { display: none; }
+
+    /* Audio */
+    audio { width: 100%; max-width: 680px; margin-top: 0.25rem; }
   </style>
 </head>
 
 <body>
 
-<header class="hero">
+<header class="hero no-print">
   <h1>Thomas Meyer – Sprache, Antisemitismus, Gegenwart</h1>
   <p class="subtitle">Lernumgebung Sek II · Vorbereitung auf eine Autorenlesung</p>
 </header>
@@ -82,7 +103,6 @@
     im Alltag verankert sind – oft ohne böse Absicht, aber mit klarer Wirkung.
   </p>
 
-  <!-- NEU: PDF-Link (bereits beauftragt) -->
   <div class="resource-list">
     <strong>Ressourcen zu Abschnitt 1</strong>
     <ul>
@@ -92,7 +112,18 @@
         </a>
       </li>
 
-      <!-- NEU: weiteres PDF aus Upload -->
+      <!-- =========================================================
+           NEU: MP3 exakt zwischen den beiden PDFs
+           ========================================================= -->
+      <li>
+        🎧 <strong>Audio: Meyer_Nase.mp3</strong><br/>
+        <audio controls preload="metadata">
+          <source src="assets/audio/Meyer_Nase.mp3" type="audio/mpeg">
+          Dein Browser unterstützt kein Audio-Element.
+        </audio>
+        <div class="hint">Hinweis: Audio liegt im Repo unter <code>assets/audio/Meyer_Nase.mp3</code>.</div>
+      </li>
+
       <li>
         <a href="assets/pdf/Thomas%20Meyer%20u%CC%88ber%20Depression%2C%20Klinikaufenthalt%20und%20Gaza.pdf"
            target="_blank" rel="noopener noreferrer">
@@ -102,115 +133,172 @@
     </ul>
   </div>
 
-  <!-- NEU: Thesenarbeit (12/12) mit Sofortfeedback -->
   <div class="panel-sub">
     <h3>Thomas Meyer: „Die jüdische Nase“ – Thesen & Reflexion</h3>
     <p class="no-print">
-      <strong>Auftrag:</strong> Lies jede These, schreibe ins Feld (mind. ~40 Zeichen).
-      Danach erscheint ein <strong>Sofort-Feedback zum Weiterdenken</strong>.
+      <strong>Auftrag:</strong> Schreibe zu jeder These eine kurze Antwort. Danach klickst du auf
+      <strong>„Antwort prüfen“</strong>, um das Sofort-Feedback zum Weiterdenken zu sehen.
     </p>
 
     <!-- These 1 -->
-    <div class="thesis">
-      <p><strong>These 1:</strong> Antisemitismus wird gesellschaftlich fast ausschließlich mit körperlicher Gewalt gleichgesetzt.</p>
-      <p><strong>Arbeitsauftrag:</strong> Erläutere, warum diese enge Definition problematisch ist. Welche Folgen hat sie für den Umgang mit Antisemitismus im Alltag?</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_1','Diese Verengung blendet antisemitische Denk- und Sprachmuster aus, die ohne Gewalt auskommen. Menschen können sich dadurch selbst als „nicht antisemitisch“ wahrnehmen, obwohl sie Vorurteile reproduzieren. Antisemitismus bleibt so gesellschaftlich akzeptiert und wird nicht hinterfragt.')"></textarea>
-      <div class="feedback" id="tm_fb_1"></div>
+    <div class="task" id="tm_th_1">
+      <label>These 1: Antisemitismus wird gesellschaftlich fast ausschließlich mit körperlicher Gewalt gleichgesetzt.</label>
+      <div><strong>Arbeitsauftrag:</strong> Erläutere, warum diese enge Definition problematisch ist. Welche Folgen hat sie für den Umgang mit Antisemitismus im Alltag?</div>
+      <textarea id="tm_in_1"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_1','tm_fb_1')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_1')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_1">Diese Verengung blendet antisemitische Denk- und Sprachmuster aus, die ohne Gewalt auskommen. Menschen können sich dadurch selbst als „nicht antisemitisch“ wahrnehmen, obwohl sie Vorurteile reproduzieren. Antisemitismus bleibt so gesellschaftlich akzeptiert und wird nicht hinterfragt.</div>
     </div>
 
     <!-- These 2 -->
-    <div class="thesis">
-      <p><strong>These 2:</strong> Der gewaltlose Antisemitismus ist die häufigste, aber am schwersten erkennbare Form.</p>
-      <p><strong>Arbeitsauftrag:</strong> Beschreibe zwei typische Merkmale des gewaltlosen Antisemitismus nach Meyer.</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_2','Gewaltloser Antisemitismus äußert sich häufig freundlich, humorvoll oder scheinbar interessiert. Er arbeitet mit Verallgemeinerungen und Klischees und wird nicht als Hass, sondern als „normale Meinung“ oder „Witz“ wahrgenommen. Genau das macht ihn schwer angreifbar.')"></textarea>
-      <div class="feedback" id="tm_fb_2"></div>
+    <div class="task" id="tm_th_2">
+      <label>These 2: Der gewaltlose Antisemitismus ist die häufigste, aber am schwersten erkennbare Form.</label>
+      <div><strong>Arbeitsauftrag:</strong> Beschreibe zwei typische Merkmale des gewaltlosen Antisemitismus nach Meyer.</div>
+      <textarea id="tm_in_2"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_2','tm_fb_2')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_2')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_2">Gewaltloser Antisemitismus äußert sich häufig freundlich, humorvoll oder scheinbar interessiert. Er arbeitet mit Verallgemeinerungen und Klischees und wird nicht als Hass, sondern als „normale Meinung“ oder „Witz“ wahrgenommen. Genau das macht ihn schwer angreifbar.</div>
     </div>
 
     <!-- These 3 -->
-    <div class="thesis">
-      <p><strong>These 3:</strong> Gewaltloser Antisemitismus stammt aus der gesellschaftlichen Mitte.</p>
-      <p><strong>Arbeitsauftrag:</strong> Warum ist es für Meyer besonders problematisch, dass Antisemitismus aus der Mitte der Gesellschaft kommt?</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_3','Weil sich diese Menschen selbst als tolerant, gebildet und moralisch korrekt verstehen. Dadurch halten sie ihre Aussagen für harmlos und sind kaum bereit zur Selbstkritik. Antisemitismus wird so stabilisiert, nicht bekämpft.')"></textarea>
-      <div class="feedback" id="tm_fb_3"></div>
+    <div class="task" id="tm_th_3">
+      <label>These 3: Gewaltloser Antisemitismus stammt aus der gesellschaftlichen Mitte.</label>
+      <div><strong>Arbeitsauftrag:</strong> Warum ist es für Meyer besonders problematisch, dass Antisemitismus aus der Mitte der Gesellschaft kommt?</div>
+      <textarea id="tm_in_3"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_3','tm_fb_3')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_3')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_3">Weil sich diese Menschen selbst als tolerant, gebildet und moralisch korrekt verstehen. Dadurch halten sie ihre Aussagen für harmlos und sind kaum bereit zur Selbstkritik. Antisemitismus wird so stabilisiert, nicht bekämpft.</div>
     </div>
 
     <!-- These 4 -->
-    <div class="thesis">
-      <p><strong>These 4:</strong> Jüdische Identität wird oft als Erklärung für individuelles Verhalten benutzt.</p>
-      <p><strong>Arbeitsauftrag:</strong> Erkläre, was daran diskriminierend ist, wenn Verhalten mit „jüdisch sein“ erklärt wird.</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_4','Individuelle Eigenschaften werden nicht als persönlich, sondern als gruppentypisch gedeutet. Das entzieht jüdischen Menschen ihre Individualität und macht sie zu Repräsentanten eines Kollektivs.')"></textarea>
-      <div class="feedback" id="tm_fb_4"></div>
+    <div class="task" id="tm_th_4">
+      <label>These 4: Jüdische Identität wird oft als Erklärung für individuelles Verhalten benutzt.</label>
+      <div><strong>Arbeitsauftrag:</strong> Erkläre, was daran diskriminierend ist, wenn Verhalten mit „jüdisch sein“ erklärt wird.</div>
+      <textarea id="tm_in_4"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_4','tm_fb_4')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_4')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_4">Individuelle Eigenschaften werden nicht als persönlich, sondern als gruppentypisch gedeutet. Das entzieht jüdischen Menschen ihre Individualität und macht sie zu Repräsentanten eines Kollektivs.</div>
     </div>
 
     <!-- These 5 -->
-    <div class="thesis">
-      <p><strong>These 5:</strong> Auch positive Zuschreibungen gegenüber Juden sind antisemitisch.</p>
-      <p><strong>Arbeitsauftrag:</strong> Warum können scheinbar positive Aussagen (z. B. „Juden sind intelligent“) problematisch sein?</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_5','Sie reduzieren Menschen auf stereotype Eigenschaften. Wer diesen nicht entspricht, gilt als Ausnahme. So bleibt das Vorurteil bestehen und das Individuum wird unsichtbar gemacht.')"></textarea>
-      <div class="feedback" id="tm_fb_5"></div>
+    <div class="task" id="tm_th_5">
+      <label>These 5: Auch positive Zuschreibungen gegenüber Juden sind antisemitisch.</label>
+      <div><strong>Arbeitsauftrag:</strong> Warum können scheinbar positive Aussagen (z. B. „Juden sind intelligent“) problematisch sein?</div>
+      <textarea id="tm_in_5"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_5','tm_fb_5')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_5')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_5">Sie reduzieren Menschen auf stereotype Eigenschaften. Wer diesen nicht entspricht, gilt als Ausnahme. So bleibt das Vorurteil bestehen und das Individuum wird unsichtbar gemacht.</div>
     </div>
 
     <!-- These 6 -->
-    <div class="thesis">
-      <p><strong>These 6:</strong> Antisemitische Klischees haben historische Ursprünge, die bis heute wirken.</p>
-      <p><strong>Arbeitsauftrag:</strong> Nenne einen historischen Ursprung antisemitischer Klischees, den Meyer erklärt.</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_6','Ein Beispiel ist das Bild des „geldgierigen Juden“, das im Mittelalter entstand, als Christen durch kirchliche Verbote keine Zinsen nehmen durften und Juden in den Geldverleih gedrängt wurden. Dieses historische Muster wirkt bis heute fort.')"></textarea>
-      <div class="feedback" id="tm_fb_6"></div>
+    <div class="task" id="tm_th_6">
+      <label>These 6: Antisemitische Klischees haben historische Ursprünge, die bis heute wirken.</label>
+      <div><strong>Arbeitsauftrag:</strong> Nenne einen historischen Ursprung antisemitischer Klischees, den Meyer erklärt.</div>
+      <textarea id="tm_in_6"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_6','tm_fb_6')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_6')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_6">Ein Beispiel ist das Bild des „geldgierigen Juden“, das im Mittelalter entstand, als Christen durch kirchliche Verbote keine Zinsen nehmen durften und Juden in den Geldverleih gedrängt wurden. Dieses historische Muster wirkt bis heute fort.</div>
     </div>
 
     <!-- These 7 -->
-    <div class="thesis">
-      <p><strong>These 7:</strong> Israel wird häufig mit „den Juden“ gleichgesetzt.</p>
-      <p><strong>Arbeitsauftrag:</strong> Erkläre, warum es antisemitisch sein kann, Israelkritik an jüdische Einzelpersonen zu richten.</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_7','Weil jüdische Menschen dadurch kollektiv für die Politik eines Staates verantwortlich gemacht werden, mit dem sie individuell nichts zu tun haben müssen. Das hebt die Trennung zwischen Staat und Religionszugehörigkeit auf.')"></textarea>
-      <div class="feedback" id="tm_fb_7"></div>
+    <div class="task" id="tm_th_7">
+      <label>These 7: Israel wird häufig mit „den Juden“ gleichgesetzt.</label>
+      <div><strong>Arbeitsauftrag:</strong> Erkläre, warum es antisemitisch sein kann, Israelkritik an jüdische Einzelpersonen zu richten.</div>
+      <textarea id="tm_in_7"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_7','tm_fb_7')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_7')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_7">Weil jüdische Menschen dadurch kollektiv für die Politik eines Staates verantwortlich gemacht werden, mit dem sie individuell nichts zu tun haben müssen. Das hebt die Trennung zwischen Staat und Religionszugehörigkeit auf.</div>
     </div>
 
     <!-- These 8 -->
-    <div class="thesis">
-      <p><strong>These 8:</strong> Antisemitische Aussagen werden oft als Humor oder Meinung verteidigt.</p>
-      <p><strong>Arbeitsauftrag:</strong> Welche Rolle spielt laut Meyer die Wirkung einer Aussage im Vergleich zur Absicht?</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_8','Die Wirkung auf Betroffene ist entscheidend. Ob etwas „so gemeint“ war, ist zweitrangig, wenn es verletzend wirkt. Humor rechtfertigt keine Diskriminierung.')"></textarea>
-      <div class="feedback" id="tm_fb_8"></div>
+    <div class="task" id="tm_th_8">
+      <label>These 8: Antisemitische Aussagen werden oft als Humor oder Meinung verteidigt.</label>
+      <div><strong>Arbeitsauftrag:</strong> Welche Rolle spielt laut Meyer die Wirkung einer Aussage im Vergleich zur Absicht?</div>
+      <textarea id="tm_in_8"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_8','tm_fb_8')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_8')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_8">Die Wirkung auf Betroffene ist entscheidend. Ob etwas „so gemeint“ war, ist zweitrangig, wenn es verletzend wirkt. Humor rechtfertigt keine Diskriminierung.</div>
     </div>
 
     <!-- These 9 -->
-    <div class="thesis">
-      <p><strong>These 9:</strong> Erfahrungen jüdischer Menschen mit Antisemitismus werden häufig relativiert.</p>
-      <p><strong>Arbeitsauftrag:</strong> Welche typischen Reaktionen beschreibt Meyer auf Berichte über Antisemitismus?</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_9','Juden wird Überempfindlichkeit, Paranoia oder Humorlosigkeit unterstellt. Damit wird ihre Erfahrung entwertet und ihnen die Kompetenz abgesprochen, Antisemitismus zu erkennen.')"></textarea>
-      <div class="feedback" id="tm_fb_9"></div>
+    <div class="task" id="tm_th_9">
+      <label>These 9: Erfahrungen jüdischer Menschen mit Antisemitismus werden häufig relativiert.</label>
+      <div><strong>Arbeitsauftrag:</strong> Welche typischen Reaktionen beschreibt Meyer auf Berichte über Antisemitismus?</div>
+      <textarea id="tm_in_9"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_9','tm_fb_9')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_9')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_9">Juden wird Überempfindlichkeit, Paranoia oder Humorlosigkeit unterstellt. Damit wird ihre Erfahrung entwertet und ihnen die Kompetenz abgesprochen, Antisemitismus zu erkennen.</div>
     </div>
 
     <!-- These 10 -->
-    <div class="thesis">
-      <p><strong>These 10:</strong> Antisemitismus beginnt bei Sprache und Denken, nicht bei Gewalt.</p>
-      <p><strong>Arbeitsauftrag:</strong> Erkläre den Zusammenhang zwischen Sprache, Denken und späterer Ausgrenzung.</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_10','Sprachliche Zuschreibungen und Denkmuster normalisieren Vorurteile. Sie schaffen ein Klima, in dem Ausgrenzung legitim erscheint. Gewalt ist die Eskalation, nicht der Anfang.')"></textarea>
-      <div class="feedback" id="tm_fb_10"></div>
+    <div class="task" id="tm_th_10">
+      <label>These 10: Antisemitismus beginnt bei Sprache und Denken, nicht bei Gewalt.</label>
+      <div><strong>Arbeitsauftrag:</strong> Erkläre den Zusammenhang zwischen Sprache, Denken und späterer Ausgrenzung.</div>
+      <textarea id="tm_in_10"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_10','tm_fb_10')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_10')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_10">Sprachliche Zuschreibungen und Denkmuster normalisieren Vorurteile. Sie schaffen ein Klima, in dem Ausgrenzung legitim erscheint. Gewalt ist die Eskalation, nicht der Anfang.</div>
     </div>
 
     <!-- These 11 -->
-    <div class="thesis">
-      <p><strong>These 11:</strong> Aufklärungsversuche stoßen oft auf Abwehr.</p>
-      <p><strong>Arbeitsauftrag:</strong> Warum reagieren viele Menschen defensiv, wenn Antisemitismus benannt wird?</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_11','Weil die Kritik ihr Selbstbild als „guter Mensch“ bedroht. Statt das eigene Denken zu hinterfragen, wird der Vorwurf zurückgewiesen oder der Überbringer diskreditiert.')"></textarea>
-      <div class="feedback" id="tm_fb_11"></div>
+    <div class="task" id="tm_th_11">
+      <label>These 11: Aufklärungsversuche stoßen oft auf Abwehr.</label>
+      <div><strong>Arbeitsauftrag:</strong> Warum reagieren viele Menschen defensiv, wenn Antisemitismus benannt wird?</div>
+      <textarea id="tm_in_11"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_11','tm_fb_11')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_11')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_11">Weil die Kritik ihr Selbstbild als „guter Mensch“ bedroht. Statt das eigene Denken zu hinterfragen, wird der Vorwurf zurückgewiesen oder der Überbringer diskreditiert.</div>
     </div>
 
     <!-- Schlussthese -->
-    <div class="thesis">
-      <p><strong>Schlussthese:</strong> Antisemitismus ist gesellschaftliche Normalität, nicht Ausnahme.</p>
-      <p><strong>Arbeitsauftrag:</strong> Formuliere in einem Satz, was Meyers zentrale Botschaft an nichtjüdische Leser:innen ist.</p>
-      <textarea oninput="tmThesisFeedback(this,'tm_fb_12','Antisemitismus verschwindet nicht durch gute Absichten, sondern nur durch bewusste Selbstreflexion – auch (und gerade) bei Menschen, die sich selbst für tolerant halten.')"></textarea>
-      <div class="feedback" id="tm_fb_12"></div>
+    <div class="task" id="tm_th_12">
+      <label>Schlussthese: Antisemitismus ist gesellschaftliche Normalität, nicht Ausnahme.</label>
+      <div><strong>Arbeitsauftrag:</strong> Formuliere in einem Satz, was Meyers zentrale Botschaft an nichtjüdische Leser:innen ist.</div>
+      <textarea id="tm_in_12"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('tm_in_12','tm_fb_12')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('tm_fb_12')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="tm_fb_12">Antisemitismus verschwindet nicht durch gute Absichten, sondern nur durch bewusste Selbstreflexion – auch (und gerade) bei Menschen, die sich selbst für tolerant halten.</div>
     </div>
 
+    <!-- Export für Abschnitt 1 -->
+    <div class="exportrow no-print">
+      <button type="button" onclick="exportSectionPDF('sec1','exportTitle1')">📄 Abschnitt 1 als PDF exportieren</button>
+      <span class="hint">Öffnet den Druckdialog → „Als PDF sichern“.</span>
+    </div>
+  </div>
+
+  <!-- Print-only Titel -->
+  <div class="print-only" id="exportTitle1">
+    <h2>Abschnitt 1 – Einstieg: Sprache ist nie harmlos (Export)</h2>
   </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 2. GRUNDWISSEN: WAS IST ANTISEMITISMUS? (MIT ALLEN RESSOURCEN) -->
+<!-- 2. GRUNDWISSEN: WAS IST ANTISEMITISMUS? + INTERAKTIV -->
 <!-- ===================================================== -->
 <section class="panel" id="sec2">
   <h2>2. Grundwissen: Was ist Antisemitismus?</h2>
@@ -220,7 +308,6 @@
     Er äußert sich in Sprache, Bildern, Denkfiguren und Handlungen.
   </p>
 
-  <!-- NEU: GRA Ressource (von dir beauftragt) -->
   <div class="resource-list">
     <strong>Ressourcen zu Abschnitt 2</strong>
     <ul>
@@ -229,24 +316,21 @@
           🔗 GRA – Online-Zitatkarten (Bildung)
         </a>
       </li>
-
-      <!-- NEU: KI-Multimedia-Tool PDFs (von dir beauftragt; Uploads vorhanden) -->
       <li>
         <a href="assets/pdf/KI-Multimedia-Tool_httpswwwyoutubecomwatchv0U_Anw9ylBkt8s_12-01-2026.pdf"
            target="_blank" rel="noopener noreferrer">
-          📄 KI-Multimedia-Tool (PDF 1) – YouTube-Bezug (12-01-2026)
+          📄 KI-Multimedia-Tool (PDF 1) – httpswwwyoutubecomwatchv0U_Anw9ylBkt8s_12-01-2026
         </a>
       </li>
       <li>
         <a href="assets/pdf/KI-Multimedia-Tool_httpswwwyoutubecomwatchvaX7AqdB4UNs_12-01-2026.pdf"
            target="_blank" rel="noopener noreferrer">
-          📄 KI-Multimedia-Tool (PDF 2) – YouTube-Bezug (12-01-2026)
+          📄 KI-Multimedia-Tool (PDF 2) – httpswwwyoutubecomwatchvaX7AqdB4UNs_12-01-2026
         </a>
       </li>
     </ul>
   </div>
 
-  <!-- Definitionsblock (vollständig, wie von dir geliefert) -->
   <div class="panel-sub">
     <h3>Definitionen (vollständig)</h3>
 
@@ -372,93 +456,93 @@
         <tr><td style="padding:0.5rem;">Kritisch</td><td style="padding:0.5rem;">Begrenzung des Begriffs</td></tr>
       </tbody>
     </table>
+  </div>
 
-    <!-- Lernfolie: Thesenkarte + Kommentarfeld + Sofortfeedback -->
-    <div class="panel-sub">
-      <h3>Antisemitismus – Definitionen im Vergleich (Lernfolie)</h3>
+  <!-- Interaktive Lernfolie + Aufgaben (B gewählt) -->
+  <div class="panel-sub" id="sec2_tasks">
+    <h3>Antisemitismus – Definitionen im Vergleich (interaktiv)</h3>
 
-      <h4>🎯 Lernziel</h4>
-      <ul>
-        <li>dass es <strong>nicht die eine Antisemitismus-Definition</strong> gibt</li>
-        <li>und warum unterschiedliche Definitionen existieren</li>
-      </ul>
+    <h4>🎯 Lernziel</h4>
+    <ul>
+      <li>Schüler:innen erkennen, dass es <strong>nicht die eine Antisemitismus-Definition</strong> gibt.</li>
+      <li>Schüler:innen verstehen, warum unterschiedliche Definitionen existieren (Kontext, Ziel, Methode).</li>
+    </ul>
 
-      <h4>🟦 Thesenkarte</h4>
-      <p><strong>These</strong></p>
-      <p><strong>Antisemitismus ist kein einheitlich definierter Begriff, sondern wird je nach Kontext unterschiedlich bestimmt.</strong></p>
+    <h4>🟦 Thesenkarte</h4>
+    <p><strong>These:</strong> Antisemitismus ist kein einheitlich definierter Begriff, sondern wird je nach Kontext unterschiedlich bestimmt.</p>
 
-      <h4>✏️ Kommentarfeld (Arbeitsauftrag)</h4>
-      <p>Beantworte die Fragen stichwortartig:</p>
-      <ol>
-        <li>Warum ist es problematisch, Antisemitismus <strong>nur</strong> als körperliche Gewalt zu verstehen?</li>
-        <li>Welche Vorteile hat eine <strong>weite Definition</strong> (z. B. IHRA)?</li>
-        <li>Welche Vorteile hat eine <strong>enge / analytische Definition</strong> (z. B. sozialwissenschaftlich)?</li>
-        <li>In welchem Kontext wäre <strong>welche Definition</strong> besonders sinnvoll? (Schule / Forschung / Politik / Medien)</li>
-      </ol>
-
-      <textarea oninput="defFolieFeedback(this,'def_folie_fb')"></textarea>
-      <div class="feedback" id="def_folie_fb"></div>
-
-      <h4>🧠 Merksatz</h4>
-      <p><strong>Wie Antisemitismus definiert wird, entscheidet darüber, was wir sehen – und was wir übersehen.</strong></p>
-    </div>
-
-    <!-- Punkt 3: mehrere Felder + Sofortfeedback -->
-    <div class="panel-sub">
-      <h3>3. Weite vs. enge Definition – Sicherung</h3>
-
-      <div class="question-block">
-        <p><strong>3a. Warum ist es problematisch, Antisemitismus nur als körperliche Gewalt zu verstehen?</strong></p>
-        <textarea oninput="defFieldFeedback(this,'fb_3a','Antisemitismus zeigt sich oft sprachlich, symbolisch und strukturell. Gewalt ist häufig der Endpunkt einer Eskalation, nicht der Anfang. Wenn man nur Gewalt zählt, übersieht man Alltagsantisemitismus und seine Normalisierung.')"></textarea>
-        <div class="feedback" id="fb_3a"></div>
+    <!-- Aufgabe 2.1 -->
+    <div class="task" id="def_task_1">
+      <label>2.1 Warum ist es problematisch, Antisemitismus nur als körperliche Gewalt zu verstehen?</label>
+      <textarea id="def_in_1"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('def_in_1','def_fb_1')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('def_fb_1')">Feedback ausblenden</button>
       </div>
-
-      <div class="question-block">
-        <p><strong>3b. Welche Vorteile hat eine weite Definition (z. B. IHRA)?</strong></p>
-        <textarea oninput="defFieldFeedback(this,'fb_3b','Eine weite Definition macht verdeckte Formen sichtbar, dient Prävention und Schutz (auch von Institutionen) und ist praktisch für Politik/Schule. Sie kann schneller handlungsleitend wirken, weil sie mehr Phänomene erfasst.')"></textarea>
-        <div class="feedback" id="fb_3b"></div>
-      </div>
-
-      <div class="question-block">
-        <p><strong>3c. Welche Vorteile hat eine enge / analytische Definition (z. B. sozialwissenschaftlich)?</strong></p>
-        <textarea oninput="defFieldFeedback(this,'fb_3c','Eine enge Definition ist trennschärfer, hilft in Forschung/Analyse und verhindert Begriffsverwässerung. Sie erlaubt präzise Vergleiche und klarere Diagnosen.')"></textarea>
-        <div class="feedback" id="fb_3c"></div>
+      <div class="feedback" id="def_fb_1">
+        Antisemitismus zeigt sich häufig <strong>sprachlich</strong>, <strong>symbolisch</strong> und <strong>strukturell</strong>. Wenn man nur Gewalt zählt, übersieht man Alltagsantisemitismus und seine Normalisierung. Gewalt ist oft der Endpunkt einer Eskalation – nicht der Anfang.
       </div>
     </div>
 
-    <!-- Punkt 4: mehrere Felder + Sofortfeedback -->
-    <div class="panel-sub">
-      <h3>4. Kontextabhängigkeit – Welche Definition ist wo sinnvoll?</h3>
-
-      <div class="question-block">
-        <p><strong>4a. Schule</strong> – Welche Definition(en) wären hier sinnvoll? Begründe.</p>
-        <textarea oninput="defFieldFeedback(this,'fb_4a','In der Schule ist eine sensibilisierende, praxisnahe Definition hilfreich (z. B. IHRA/EUMC plus sprach- und diskursbezogene Perspektive), weil sie Alltagsformen sichtbar macht und Prävention ermöglicht.')"></textarea>
-        <div class="feedback" id="fb_4a"></div>
+    <!-- Aufgabe 2.2 -->
+    <div class="task" id="def_task_2">
+      <label>2.2 Welche Vorteile hat eine weite Definition (z. B. IHRA)?</label>
+      <textarea id="def_in_2"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('def_in_2','def_fb_2')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('def_fb_2')">Feedback ausblenden</button>
       </div>
-
-      <div class="question-block">
-        <p><strong>4b. Wissenschaft / Forschung</strong> – Welche Definition(en) wären hier sinnvoll? Begründe.</p>
-        <textarea oninput="defFieldFeedback(this,'fb_4b','In der Forschung braucht es trennscharfe, analytische Definitionen (sozialwissenschaftlich, historisch-ideologisch, diskursanalytisch). Ziel ist Vergleichbarkeit und Präzision.')"></textarea>
-        <div class="feedback" id="fb_4b"></div>
-      </div>
-
-      <div class="question-block">
-        <p><strong>4c. Politik / Behörden</strong> – Welche Definition(en) wären hier sinnvoll? Begründe.</p>
-        <textarea oninput="defFieldFeedback(this,'fb_4c','In Politik/Behörden sind normativ-handlungsleitende Definitionen (IHRA) zentral, weil sie Standards für Monitoring und Interventionen bieten. Gleichzeitig ist sorgfältige Anwendung nötig.')"></textarea>
-        <div class="feedback" id="fb_4c"></div>
-      </div>
-
-      <div class="question-block">
-        <p><strong>4d. Medien / Öffentlichkeit</strong> – Welche Definition(en) wären hier sinnvoll? Begründe.</p>
-        <textarea oninput="defFieldFeedback(this,'fb_4d','In Medien ist die sprach- und diskursbezogene Perspektive zentral (Codes/Frames), ergänzt durch IHRA/EUMC als Orientierung. Kontextualisierung verhindert vorschnelle Etikettierung.')"></textarea>
-        <div class="feedback" id="fb_4d"></div>
+      <div class="feedback" id="def_fb_2">
+        Eine weite Definition macht verdeckte Formen sichtbarer, unterstützt Prävention und Schutz (auch von Institutionen) und ist handlungsleitend für Schule/Behörden. Sie hilft, Muster wie <strong>Doppelstandards</strong> oder <strong>Dämonisierung</strong> zu erkennen.
       </div>
     </div>
+
+    <!-- Aufgabe 2.3 -->
+    <div class="task" id="def_task_3">
+      <label>2.3 Welche Vorteile hat eine enge / analytische Definition (z. B. sozialwissenschaftlich)?</label>
+      <textarea id="def_in_3"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('def_in_3','def_fb_3')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('def_fb_3')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="def_fb_3">
+        Eine enge Definition ist trennschärfer für Analyse und Forschung: Sie verhindert Begriffsverwässerung, ermöglicht Vergleichbarkeit und präzise Diagnosen (z. B. Abgrenzung zu anderen Formen gruppenbezogener Menschenfeindlichkeit).
+      </div>
+    </div>
+
+    <!-- Aufgabe 2.4 -->
+    <div class="task" id="def_task_4">
+      <label>2.4 In welchem Kontext wäre welche Definition besonders sinnvoll? (Schule / Forschung / Politik / Medien)</label>
+      <textarea id="def_in_4"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('def_in_4','def_fb_4')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('def_fb_4')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="def_fb_4">
+        <strong>Schule:</strong> weite, sensibilisierende Perspektive + sprach/diskursbezogen (Alltagsformen sichtbar machen).<br/>
+        <strong>Forschung:</strong> analytische, trennscharfe Definitionen (Vergleichbarkeit, Präzision).<br/>
+        <strong>Politik/Behörden:</strong> normativ-handlungsleitend (z. B. IHRA) – mit sorgfältiger Anwendung.<br/>
+        <strong>Medien:</strong> sprach- und diskurskritisch (Codes/Frames) + Orientierung durch IHRA/EUMC.
+      </div>
+    </div>
+
+    <div class="panel-sub">
+      <p><strong>Merksatz:</strong> Wie Antisemitismus definiert wird, entscheidet darüber, was wir sehen – und was wir übersehen.</p>
+    </div>
+
+    <div class="exportrow no-print">
+      <button type="button" onclick="exportSectionPDF('sec2','exportTitle2')">📄 Abschnitt 2 als PDF exportieren</button>
+      <span class="hint">Öffnet den Druckdialog → „Als PDF sichern“.</span>
+    </div>
+  </div>
+
+  <div class="print-only" id="exportTitle2">
+    <h2>Abschnitt 2 – Grundwissen: Was ist Antisemitismus? (Export)</h2>
   </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 3. DER 7. OKTOBER 2023 (Film-Link + Sicherung) -->
+<!-- 3. DER 7. OKTOBER 2023 -->
 <!-- ===================================================== -->
 <section class="panel" id="sec3">
   <h2>3. Der 7. Oktober 2023</h2>
@@ -469,7 +553,6 @@
     weltweit politische, gesellschaftliche und emotionale Folgen.
   </p>
 
-  <!-- NEU: Dropbox-Link (wie beauftragt) -->
   <p class="no-print">
     🎬 <a href="https://www.dropbox.com/scl/fi/g1qagill5dhu823rkg8vo/Doku-Israel-Gaza-und-der-Krieg-auslandsjournal.mp4?rlkey=td1t83zdmbi50k0ru9wgicsqp&st=1rpgdvmi&dl=0"
           target="_blank" rel="noopener noreferrer">Film extern öffnen (Dropbox)</a><br>
@@ -478,16 +561,32 @@
 
   <div class="panel-sub">
     <h3>Arbeitsauftrag</h3>
-    <div class="question-block">
-      <p><strong>Notiere drei Beobachtungen oder Fragen, die sich beim Schauen dieses Films ergeben.</strong></p>
-      <textarea oninput="genericFeedback(this,'fb_oct','Weiterdenken: Prüfe, ob deine drei Punkte (1) Beobachtung (was passiert?), (2) Deutung (was bedeutet das?) und (3) offene Frage (was ist unklar?) abdecken.')"></textarea>
-      <div class="feedback" id="fb_oct"></div>
+
+    <div class="task" id="oct_task_1">
+      <label>Notiere drei Beobachtungen oder Fragen, die sich beim Schauen dieses Films ergeben.</label>
+      <textarea id="oct_in_1"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('oct_in_1','oct_fb_1')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('oct_fb_1')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="oct_fb_1">
+        Weiterdenken: Prüfe, ob deine drei Punkte (1) <strong>Beobachtung</strong> (was passiert?), (2) <strong>Deutung</strong> (was bedeutet das?) und (3) <strong>offene Frage</strong> (was ist unklar?) abdecken. Ergänze, falls ein Typ fehlt.
+      </div>
     </div>
+
+    <div class="exportrow no-print">
+      <button type="button" onclick="exportSectionPDF('sec3','exportTitle3')">📄 Abschnitt 3 als PDF exportieren</button>
+      <span class="hint">Öffnet den Druckdialog → „Als PDF sichern“.</span>
+    </div>
+  </div>
+
+  <div class="print-only" id="exportTitle3">
+    <h2>Abschnitt 3 – Der 7. Oktober 2023 (Export)</h2>
   </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 4. ANTISEMITISMUS IN DER SCHWEIZ HEUTE (Film-Link + Sicherung) -->
+<!-- 4. ANTISEMITISMUS IN DER SCHWEIZ HEUTE -->
 <!-- ===================================================== -->
 <section class="panel" id="sec4">
   <h2>4. Antisemitismus in der Schweiz heute</h2>
@@ -497,7 +596,6 @@
     im öffentlichen Raum.
   </p>
 
-  <!-- NEU: Dropbox-Link (wie beauftragt) -->
   <p class="no-print">
     🎬 <a href="https://www.dropbox.com/scl/fi/km25neyaiz82nilfzu7cj/Antisemitismus-Judenhass-in-der-Schweiz-DOK-SRF.mp4?rlkey=lf108kr3bv73yrjt51yje9lvi&st=6gka3kdn&dl=0"
           target="_blank" rel="noopener noreferrer">SRF DOK extern öffnen</a><br>
@@ -505,30 +603,57 @@
   </p>
 
   <div class="panel-sub">
-    <h3>Leitfragen (mit Antwortfeldern + Sofortfeedback)</h3>
+    <h3>Leitfragen (mit Abschicken + Sofortfeedback)</h3>
 
-    <div class="question-block">
-      <p><strong>Welche Situationen werden geschildert?</strong></p>
-      <textarea oninput="genericFeedback(this,'fb_ch_a','Weiterdenken: Ordne Situationen nach Form (Sprache/Witze, Online, Institutionen, Bedrohung, Ausgrenzung). Diese Ordnung hilft, Muster zu erkennen.')"></textarea>
-      <div class="feedback" id="fb_ch_a"></div>
+    <div class="task" id="ch_task_a">
+      <label>Welche Situationen werden geschildert?</label>
+      <textarea id="ch_in_a"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('ch_in_a','ch_fb_a')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('ch_fb_a')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="ch_fb_a">
+        Weiterdenken: Ordne Situationen nach Form (Sprache/Witze, Online, Institutionen, Bedrohung, Ausgrenzung). Diese Ordnung hilft, Muster zu erkennen und zu vergleichen.
+      </div>
     </div>
 
-    <div class="question-block">
-      <p><strong>Was hat dich besonders überrascht?</strong></p>
-      <textarea oninput="genericFeedback(this,'fb_ch_b','Weiterdenken: Überraschung zeigt oft Vorannahmen. Welche Vorstellung über „Normalität“ oder „Sicherheit“ wird bei dir erschüttert?')"></textarea>
-      <div class="feedback" id="fb_ch_b"></div>
+    <div class="task" id="ch_task_b">
+      <label>Was hat dich besonders überrascht?</label>
+      <textarea id="ch_in_b"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('ch_in_b','ch_fb_b')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('ch_fb_b')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="ch_fb_b">
+        Weiterdenken: Überraschung zeigt oft Vorannahmen. Welche Vorstellung über „Normalität“ oder „Sicherheit“ wird bei dir erschüttert? Formuliere eine Vermutung über den Grund.
+      </div>
     </div>
 
-    <div class="question-block">
-      <p><strong>Wo erkennst du Parallelen zum Text von Thomas Meyer?</strong></p>
-      <textarea oninput="genericFeedback(this,'fb_ch_c','Weiterdenken: Suche Parallelen v. a. bei Alltagsantisemitismus (Zuschreibungen, „nicht so gemeint“, Ironie) und bei Abwehrreaktionen (Relativierung, Umdeutung).')"></textarea>
-      <div class="feedback" id="fb_ch_c"></div>
+    <div class="task" id="ch_task_c">
+      <label>Wo erkennst du Parallelen zum Text von Thomas Meyer?</label>
+      <textarea id="ch_in_c"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('ch_in_c','ch_fb_c')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('ch_fb_c')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="ch_fb_c">
+        Weiterdenken: Suche Parallelen v. a. bei Alltagsantisemitismus (Zuschreibungen, „nicht so gemeint“, Ironie) und bei Abwehrreaktionen (Relativierung, Umdeutung). Nenne mindestens ein konkretes Beispiel pro Bereich.
+      </div>
     </div>
+
+    <div class="exportrow no-print">
+      <button type="button" onclick="exportSectionPDF('sec4','exportTitle4')">📄 Abschnitt 4 als PDF exportieren</button>
+      <span class="hint">Öffnet den Druckdialog → „Als PDF sichern“.</span>
+    </div>
+  </div>
+
+  <div class="print-only" id="exportTitle4">
+    <h2>Abschnitt 4 – Antisemitismus in der Schweiz heute (Export)</h2>
   </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- 5. FRAGEN ENTWICKELN: VON INFORMATION ZUR FRAGE -->
+<!-- 5. VON INFORMATION ZUR FRAGE -->
 <!-- ===================================================== -->
 <section class="panel" id="sec5">
   <h2>5. Von Information zur Frage</h2>
@@ -539,25 +664,52 @@
   </p>
 
   <div class="panel-sub">
-    <h3>Fragebaukasten</h3>
+    <h3>Fragebaukasten (interaktiv)</h3>
 
-    <div class="question-block">
-      <p><strong>Baue eine Frage, die an den Text „Die jüdische Nase“ anknüpft (konkret auf Sprache/Zuschreibung bezogen).</strong></p>
-      <textarea oninput="questionPolish(this,'fb_polish_1')"></textarea>
-      <div class="feedback" id="fb_polish_1"></div>
+    <div class="task" id="qb_1">
+      <label>5.1 Baue eine Frage, die an den Text „Die jüdische Nase“ anknüpft (Sprache/Zuschreibung).</label>
+      <textarea id="qb_in_1"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('qb_in_1','qb_fb_1')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('qb_fb_1')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="qb_fb_1">
+        Weiterdenken: Ist deine Frage <strong>offen</strong> (Wie/Warum/Wodurch) und enthält sie einen <strong>konkreten Bezug</strong> (Textstelle, Begriff, Situation)? Prüfe auch den Ton: respektvoll, nicht anklagend.
+      </div>
     </div>
 
-    <div class="question-block">
-      <p><strong>Baue eine Frage, die an den SRF-Dok-Film anknüpft (Schweiz heute: Schule/Alltag/öffentlicher Raum).</strong></p>
-      <textarea oninput="questionPolish(this,'fb_polish_2')"></textarea>
-      <div class="feedback" id="fb_polish_2"></div>
+    <div class="task" id="qb_2">
+      <label>5.2 Baue eine Frage, die an die SRF-Doku anknüpft (Schweiz heute: Schule/Alltag/öffentlicher Raum).</label>
+      <textarea id="qb_in_2"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('qb_in_2','qb_fb_2')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('qb_fb_2')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="qb_fb_2">
+        Weiterdenken: Ist klar, worauf du dich beziehst (eine Szene, ein Fall, ein Muster)? Ergänze ein Detail. Formuliere so, dass Thomas Meyer aus eigener Erfahrung/Position antworten kann.
+      </div>
     </div>
 
-    <div class="question-block">
-      <p><strong>Baue eine Frage zur Unterscheidung „legitime Kritik“ vs. „antisemitische Muster“ (Definitionen aus Abschnitt 2 nutzen).</strong></p>
-      <textarea oninput="questionPolish(this,'fb_polish_3')"></textarea>
-      <div class="feedback" id="fb_polish_3"></div>
+    <div class="task" id="qb_3">
+      <label>5.3 Baue eine Frage zur Unterscheidung „legitime Kritik“ vs. „antisemitische Muster“ (Definitionen aus Abschnitt 2 nutzen).</label>
+      <textarea id="qb_in_3"></textarea>
+      <div class="btnrow no-print">
+        <button type="button" onclick="showFeedback('qb_in_3','qb_fb_3')">Antwort prüfen</button>
+        <button type="button" onclick="hideFeedback('qb_fb_3')">Feedback ausblenden</button>
+      </div>
+      <div class="feedback" id="qb_fb_3">
+        Weiterdenken: Nenne mindestens einen Marker, der auf antisemitische Muster hinweisen kann (z. B. Doppelstandards, Dämonisierung, Kollektivzuschreibung). Formuliere gleichzeitig, dass legitime Kritik möglich bleibt.
+      </div>
     </div>
+
+    <div class="exportrow no-print">
+      <button type="button" onclick="exportSectionPDF('sec5','exportTitle5')">📄 Abschnitt 5 als PDF exportieren</button>
+      <span class="hint">Öffnet den Druckdialog → „Als PDF sichern“.</span>
+    </div>
+  </div>
+
+  <div class="print-only" id="exportTitle5">
+    <h2>Abschnitt 5 – Von Information zur Frage (Export)</h2>
   </div>
 </section>
 
@@ -568,37 +720,37 @@
   <h2>6. Deine Fragen an Thomas Meyer</h2>
 
   <p class="no-print">
-    Schreibe hier deine finalen Fragen. Anschließend kannst du sie als PDF exportieren.
+    Schreibe hier deine finalen Fragen. Danach kannst du sie als PDF exportieren.
   </p>
 
-  <div class="question-block">
-    <label><strong>Finale Frage 1 (Sprache/Literatur – Text „Die jüdische Nase“)</strong></label>
+  <div class="task">
+    <label>Finale Frage 1 (Sprache/Literatur – Text „Die jüdische Nase“)</label>
     <textarea id="final_q1"></textarea>
   </div>
 
-  <div class="question-block">
-    <label><strong>Finale Frage 2 (Antisemitismus heute – Schweiz)</strong></label>
+  <div class="task">
+    <label>Finale Frage 2 (Antisemitismus heute – Schweiz)</label>
     <textarea id="final_q2"></textarea>
   </div>
 
-  <div class="question-block">
-    <label><strong>Finale Frage 3 (Israel/Öffentlichkeit – Begriffe/Definitionen)</strong></label>
+  <div class="task">
+    <label>Finale Frage 3 (Israel/Öffentlichkeit – Begriffe/Definitionen)</label>
     <textarea id="final_q3"></textarea>
   </div>
 
-  <div class="question-block">
-    <label><strong>Finale Frage 4 (Autor: Schreiben, Verantwortung, Wirkung)</strong></label>
+  <div class="task">
+    <label>Finale Frage 4 (Autor: Schreiben, Verantwortung, Wirkung)</label>
     <textarea id="final_q4"></textarea>
   </div>
 
-  <div class="panel-sub no-print">
-    <button onclick="preparePrint()">📄 PDF-Export (Druckdialog)</button>
-    <div class="hint">Druckdialog öffnen → „Als PDF sichern“ wählen.</div>
+  <div class="exportrow no-print">
+    <button type="button" onclick="prepareFinalExport(); exportSectionPDF('sec6','exportTitle6')">📄 Abschnitt 6 als PDF exportieren</button>
+    <span class="hint">Öffnet den Druckdialog → „Als PDF sichern“.</span>
   </div>
 
-  <!-- Print-only -->
-  <div class="print-only">
-    <h2>Fragen an Thomas Meyer (Export)</h2>
+  <!-- Print-only Bereich für finale Fragen -->
+  <div class="print-only" id="exportTitle6">
+    <h2>Abschnitt 6 – Fragen an Thomas Meyer (Export)</h2>
     <p><strong>Frage 1:</strong> <span id="p_q1"></span></p>
     <p><strong>Frage 2:</strong> <span id="p_q2"></span></p>
     <p><strong>Frage 3:</strong> <span id="p_q3"></span></p>
@@ -608,81 +760,75 @@
 
 </main>
 
-<footer>
+<footer class="no-print">
   <p>Diese Lernumgebung ist ausschließlich für den schulischen Unterricht bestimmt.</p>
 </footer>
 
-<!-- ===================================================== -->
-<!-- NEU: INTERAKTIVE FEEDBACK-FUNKTIONEN (vollständig) -->
-<!-- ===================================================== -->
+<!-- =====================================================
+     JS: Feedback erst nach Button-Klick + Section-PDF-Export
+     ===================================================== -->
 <script>
-  function showIfEnough(textarea, minChars) {
-    return textarea.value.trim().length >= minChars;
-  }
+  function showFeedback(textareaId, feedbackId) {
+    const ta = document.getElementById(textareaId);
+    const fb = document.getElementById(feedbackId);
+    if (!ta || !fb) return;
 
-  function tmThesisFeedback(textarea, feedbackId, feedbackText) {
-    const box = document.getElementById(feedbackId);
-    if (showIfEnough(textarea, 40)) box.textContent = feedbackText;
-    else box.textContent = "";
-  }
+    const text = (ta.value || "").trim();
 
-  function genericFeedback(textarea, feedbackId, feedbackText) {
-    const box = document.getElementById(feedbackId);
-    if (showIfEnough(textarea, 35)) box.textContent = feedbackText;
-    else box.textContent = "";
-  }
-
-  function defFolieFeedback(textarea, feedbackId) {
-    const box = document.getElementById(feedbackId);
-    if (!showIfEnough(textarea, 60)) { box.textContent = ""; return; }
-    box.textContent =
-      "Sofort-Feedback: Prüfe, ob du (1) Alltagsformen (Sprache/Codes), (2) Nutzen einer weiten Definition (Sichtbarkeit/Prävention), (3) Nutzen einer engen Definition (Trennschärfe/Analyse) und (4) Kontext (Schule/Forschung/Politik/Medien) klar unterscheidest. Ergänze mindestens ein konkretes Beispiel.";
-  }
-
-  function defFieldFeedback(textarea, feedbackId, feedbackText) {
-    const box = document.getElementById(feedbackId);
-    if (showIfEnough(textarea, 40)) box.textContent = feedbackText;
-    else box.textContent = "";
-  }
-
-  function questionPolish(textarea, feedbackId) {
-    const box = document.getElementById(feedbackId);
-    const t = textarea.value.trim();
-    if (t.length < 25) { box.textContent = ""; return; }
-
-    const lower = t.toLowerCase();
-    let msg = "Sofort-Feedback: ";
-
-    if (lower.startsWith("ist ") || lower.startsWith("sind ") || lower.startsWith("war ") || lower.startsWith("hat ")) {
-      msg += "Deine Frage wirkt eher wie Ja/Nein. Baue sie als „Wie…?“/„Warum…?“ um. ";
-    } else {
-      msg += "Die Frage ist grundsätzlich offen formuliert. ";
+    // Mindestlänge, damit nicht „zu schnell“ geprüft wird
+    if (text.length < 35) {
+      fb.textContent = "Bitte formuliere noch etwas ausführlicher (mind. ca. 35 Zeichen), bevor du das Feedback abrufst.";
+      fb.classList.add("visible");
+      return;
     }
 
-    if (!(lower.includes("text") || lower.includes("meyer") || lower.includes("film") || lower.includes("doku") || lower.includes("beispiel") || lower.includes("szene") || lower.includes("definition") || lower.includes("ihra") || lower.includes("eumc"))) {
-      msg += "Füge einen konkreten Bezug hinzu (Textstelle, Szene, Begriff, Definition). ";
-    } else {
-      msg += "Gut: Du nennst einen Bezugspunkt. ";
-    }
-
-    if (lower.includes("warum machst du") || lower.includes("wieso machst du") || lower.includes("stimmt es, dass")) {
-      msg += "Achte auf einen respektvollen Ton: eher „Wie würdest du erklären…?“/„Wie erlebst du…?“ ";
-    } else {
-      msg += "Ton wirkt respektvoll. ";
-    }
-
-    box.textContent = msg;
+    // Feedback ist bereits im HTML als Inhalt vorhanden – nur sichtbar machen
+    fb.classList.add("visible");
   }
 
-  function preparePrint() {
-    document.getElementById("p_q1").textContent = document.getElementById("final_q1").value.trim();
-    document.getElementById("p_q2").textContent = document.getElementById("final_q2").value.trim();
-    document.getElementById("p_q3").textContent = document.getElementById("final_q3").value.trim();
-    document.getElementById("final_q4").value = document.getElementById("final_q4").value; // no-op, explizit nichts verändern
-    document.getElementById("p_q4").textContent = document.getElementById("final_q4").value.trim();
+  function hideFeedback(feedbackId) {
+    const fb = document.getElementById(feedbackId);
+    if (!fb) return;
+    fb.classList.remove("visible");
+  }
+
+  // Exportiert eine einzelne Section über Druckdialog
+  function exportSectionPDF(sectionId, titleIdToShow) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    // alle Sections ausblenden
+    const allSections = document.querySelectorAll("main > section.panel");
+    allSections.forEach(s => { s.style.display = "none"; });
+
+    // gewählte Section anzeigen
+    section.style.display = "block";
+
+    // Print-only Titel innerhalb dieser Section einblenden, falls vorhanden
+    if (titleIdToShow) {
+      const t = document.getElementById(titleIdToShow);
+      if (t) t.style.display = "block";
+    }
+
     window.print();
+
+    // alles wiederherstellen
+    allSections.forEach(s => { s.style.display = "block"; });
+    if (titleIdToShow) {
+      const t = document.getElementById(titleIdToShow);
+      if (t) t.style.display = "";
+    }
+  }
+
+  // Finalexport: Inhalte aus Textareas in Print-Spans übertragen
+  function prepareFinalExport() {
+    document.getElementById("p_q1").textContent = (document.getElementById("final_q1").value || "").trim();
+    document.getElementById("p_q2").textContent = (document.getElementById("final_q2").value || "").trim();
+    document.getElementById("p_q3").textContent = (document.getElementById("final_q3").value || "").trim();
+    document.getElementById("p_q4").textContent = (document.getElementById("final_q4").value || "").trim();
   }
 </script>
 
 </body>
 </html>
+```
